@@ -1,4 +1,4 @@
-﻿using Gym13.Application;
+﻿using Gym13.Application.Interfaces;
 using Gym13.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 

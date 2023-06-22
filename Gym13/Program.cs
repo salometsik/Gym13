@@ -1,6 +1,6 @@
-using Gym13.Application;
+using Gym13.Application.Interfaces;
 using Gym13.Domain.Data;
-using Gym13.Infrastructure;
+using Gym13.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

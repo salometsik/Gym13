@@ -1,9 +1,9 @@
-﻿using Gym13.Application;
+﻿using Gym13.Application.Interfaces;
 using Gym13.Domain.Data;
 using Gym13.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Gym13.Infrastructure
+namespace Gym13.Infrastructure.Services
 {
     public class GymService : IGymService
     {
