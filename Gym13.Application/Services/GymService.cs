@@ -1,6 +1,5 @@
 ﻿using Gym13.Application.Interfaces;
-using Gym13.Domain.Data;
-using Gym13.Domain.Models;
+using Gym13.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Gym13.Infrastructure.Services
@@ -14,7 +13,5 @@ namespace Gym13.Infrastructure.Services
             _db = db;
         }
 
-        public async Task<User?> GetUser(string userId)
-            => await _db.Users.FirstOrDefaultAsync(u => u.UserId == userId);
     }
 }

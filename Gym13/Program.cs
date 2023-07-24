@@ -1,20 +1,22 @@
 using Gym13.Application.Interfaces;
-using Gym13.Domain.Data;
+using Gym13.Extensions;
 using Gym13.Infrastructure.Services;
+using Gym13.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+IServiceCollection services = builder.Services;
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+services.AddDbContext<Gym13DbContext>(options => options.UseNpgsql(connectionString));
 
-builder.Services.AddDbContext<Gym13DbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-builder.Services.AddControllers();
+services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+services.AddEndpointsApiExplorer();
+services.AddSwaggerDocumentation(builder.Configuration);
 
-builder.Services.AddScoped<IGymService, GymService>();
+services.AddScoped<IGymService, GymService>();
 
 var app = builder.Build();
 
