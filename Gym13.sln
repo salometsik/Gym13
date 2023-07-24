@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gym13", "Gym13\Gym13.csproj", "{26B281D6-0C27-49D0-B697-F7E8E84B29DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gym13", "Gym13\Gym13.csproj", "{26B281D6-0C27-49D0-B697-F7E8E84B29DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gym13.Domain", "Gym13.Domain\Gym13.Domain.csproj", "{8031AFDE-E9D9-4577-AAAD-597CF66E37BC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gym13.Persistence", "Gym13.Domain\Gym13.Persistence.csproj", "{8031AFDE-E9D9-4577-AAAD-597CF66E37BC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gym13.Application", "Gym13.Application\Gym13.Application.csproj", "{87A3F1CF-F319-4820-A819-31FB60C997FF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gym13.Application", "Gym13.Application\Gym13.Application.csproj", "{87A3F1CF-F319-4820-A819-31FB60C997FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gym13.Infrastructure", "Gym13.Infrastructure\Gym13.Infrastructure.csproj", "{E94E0190-6989-4EBC-8FFC-9F9E9C00C328}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Gym13.Infrastructure", "Gym13.Infrastructure\Gym13.Infrastructure.csproj", "{E94E0190-6989-4EBC-8FFC-9F9E9C00C328}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
