@@ -63,12 +63,12 @@ services.AddSwaggerDocumentation(builder.Configuration);
 services.AddHttpContextAccessor();
 services.AddMemoryCache();
 
-//X509Certificate2 cert = null;
-//var root = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
-//var keysPath = Path.Combine(root, "Keys");
-//var path = Path.Combine(keysPath, "accountsscert.pfx");
+X509Certificate2 cert = null;
+var root = Path.GetDirectoryName(System.Reflection.Assembly.GetEntryAssembly().Location);
+var keysPath = Path.Combine(root, "Keys");
+var path = Path.Combine(keysPath, "gym13cert.pfx");
 
-//cert = new X509Certificate2(path, "account123", X509KeyStorageFlags.MachineKeySet);
+cert = new X509Certificate2(path, "gym13", X509KeyStorageFlags.MachineKeySet);
 
 services.AddIdentityServer(opts =>
 {

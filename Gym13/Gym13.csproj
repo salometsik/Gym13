@@ -30,4 +30,10 @@
     <ProjectReference Include="..\Gym13.Application\Gym13.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Keys\gym13cert.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
