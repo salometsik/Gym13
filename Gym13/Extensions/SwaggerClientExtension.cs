@@ -59,19 +59,13 @@ namespace Gym13.Extensions
                     }
                 });
                 c.CustomSchemaIds((type) => type.Name);
-                //c.AddServer(new OpenApiServer { Url = apiHost });
-                //var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                //var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                //c.IncludeXmlComments(xmlPath);
             });
 
             return services;
         }
 
-        public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app, IConfiguration configuration/*, List<string> ips, IWebHostEnvironment env*/)
+        public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app, IConfiguration configuration)
         {
-            var clientId = configuration.GetValue<string>("IdentityServerOptions:AuthClientId");
-            var clientSecret = configuration.GetValue<string>("IdentityServerOptions:AuthClientSecret");
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
@@ -79,14 +73,8 @@ namespace Gym13.Extensions
                 c.RoutePrefix = string.Empty;
                 c.DocumentTitle = "Gym 13 API";
                 c.DocExpansion(DocExpansion.None);
-
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
-
-                //security vulnerability!!
-#if DEBUG
-                c.OAuthClientId(clientId);
-                c.OAuthClientSecret(clientSecret);
-#endif
+                c.OAuthScopeSeparator(" ");
                 c.RoutePrefix = string.Empty;
             });
 

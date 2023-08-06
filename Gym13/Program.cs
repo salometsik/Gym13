@@ -10,11 +10,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
+using Gym13;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
-var migrationsAssembly = "Gym13.Persistence";
+var migrationsAssembly = "Gym13.Domain";
 
-// Add services to the container.
 IServiceCollection services = builder.Services;
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 services.AddDbContext<Gym13DbContext>(options => options.UseNpgsql(connectionString));
@@ -75,10 +76,9 @@ services.AddIdentityServer(opts =>
     opts.Events.RaiseSuccessEvents = true;
     opts.IssuerUri = builder.Configuration.GetValue<string>($"IdentityServerConfig:Authority");
 })
-    //.AddSigningCredential(cert)
-    .AddInMemoryPersistedGrants()
+    .AddSigningCredential(cert)
     .AddAspNetIdentity<ApplicationUser>()
-    .AddProfileService<Gym13.ProfileService>()
+    .AddProfileService<ProfileService>()
     .AddConfigurationStore(options =>
     {
         options.ConfigureDbContext = builder =>
@@ -88,14 +88,15 @@ services.AddIdentityServer(opts =>
         options.ConfigureDbContext = builder =>
             builder.UseNpgsql(connectionString, sql => sql.MigrationsAssembly(migrationsAssembly));
     })
-    //.AddInMemoryApiResources(ClientConfiguration.GetApiResources())
-    //.AddInMemoryClients(ClientConfiguration.GetClients())
+    .AddInMemoryPersistedGrants()
+    .AddInMemoryApiResources(ClientConfiguration.GetApiResources())
+    .AddInMemoryClients(ClientConfiguration.GetClients())
+    .AddInMemoryApiScopes(ClientConfiguration.GetApiScopes())
     .AddResourceOwnerValidator<AppResourceOwnerPasswordValidator>()
     .AddExtensionGrantValidator<SmsConfirmGrantValidator>()
-    .Services
-    .AddScoped<IExtensionGrantValidator, FacebookGrantValidator>();
+    .AddExtensionGrantValidator<FacebookGrantValidator>();
 
-services.AddTransient<IProfileService, Gym13.ProfileService>();
+services.AddTransient<IProfileService, ProfileService>();
 services.AddScoped<IGymService, GymService>();
 
 services.AddCors();
@@ -124,6 +125,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 app.UseIdentityServer();
 app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {
