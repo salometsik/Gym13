@@ -1,5 +1,5 @@
 ﻿using Gym13.Application.Interfaces;
-using Gym13.Persistence.DTOs;
+using Gym13.Domain.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gym13.Controllers

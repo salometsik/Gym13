@@ -1,7 +1,7 @@
 ﻿using Gym13.Common.Enums;
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace Gym13.Persistence.DTOs
+namespace Gym13.Domain.DTOs
 {
     public class ApplicationUser : IdentityUser
     {

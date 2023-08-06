@@ -1,4 +1,4 @@
-﻿using Gym13.Persistence;
+﻿using Gym13.Domain;
 
 namespace Gym13.Application.Interfaces
 {

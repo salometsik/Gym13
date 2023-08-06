@@ -1,6 +1,5 @@
 ﻿using Gym13.Application.Interfaces;
-using Gym13.Persistence.Data;
-using Microsoft.EntityFrameworkCore;
+using Gym13.Domain.Data;
 
 namespace Gym13.Infrastructure.Services
 {

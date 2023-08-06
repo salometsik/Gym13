@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Gym13.Persistence\Gym13.Persistence.csproj" />
+    <ProjectReference Include="..\Gym13.Domain\Gym13.Domain.csproj" />
   </ItemGroup>
 
 </Project>

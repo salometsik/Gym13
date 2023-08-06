@@ -1,5 +1,4 @@
-﻿using Gym13.Domain.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Gym13.Domain.Data
 {
@@ -10,6 +9,5 @@ namespace Gym13.Domain.Data
 
         }
 
-        public DbSet<User> Users { get; set; }
     }
 }

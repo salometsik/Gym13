@@ -1,4 +1,4 @@
-﻿using Gym13.Persistence.DTOs;
+﻿using Gym13.Domain.DTOs;
 using Microsoft.AspNetCore.Identity;
 
 namespace Gym13.Models
