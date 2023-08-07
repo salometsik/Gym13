@@ -97,7 +97,7 @@ services.AddIdentityServer(opts =>
     .AddExtensionGrantValidator<FacebookGrantValidator>();
 
 services.AddTransient<IProfileService, ProfileService>();
-services.AddScoped<IGymService, GymService>();
+services.AddScoped<IPlanService, PlanService>();
 
 services.AddCors();
 

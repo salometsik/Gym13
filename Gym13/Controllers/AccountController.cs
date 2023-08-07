@@ -1,16 +1,18 @@
 ﻿using Gym13.Application.Interfaces;
 using Gym13.Domain.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Gym13.Controllers
 {
     [Route("v1/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    public class AccountController : ControllerBase
     {
-        readonly IGymService _gymService;
+        readonly IPlanService _gymService;
 
-        public UserController(IGymService gymService)
+        public AccountController(IPlanService gymService)
         {
             _gymService = gymService;
         }
