@@ -26,5 +26,6 @@ namespace Gym13.Domain.Data
             builder.Entity<DeviceFlowCodes>().ToTable("DeviceFlowCodes").HasKey(x => x.UserCode);
         }
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<Trainer> Trainers { get; set; }
     }
 }

@@ -59,6 +59,7 @@ namespace Gym13.Infrastructure.Services
             if (plan != null)
             {
                 plan = _mapper.Map<Plan>(request);
+                plan.UpdateDate = DateTime.UtcNow.AddHours(4);
                 await _db.SaveChangesAsync();
             }
         }
@@ -79,6 +80,7 @@ namespace Gym13.Infrastructure.Services
             if (plan != null)
             {
                 plan.IsActive = true;
+                plan.UpdateDate = DateTime.UtcNow.AddHours(4);
                 await _db.SaveChangesAsync();
             }
         }
@@ -89,6 +91,7 @@ namespace Gym13.Infrastructure.Services
             if (plan != null)
             {
                 plan.IsActive = false;
+                plan.UpdateDate = DateTime.UtcNow.AddHours(4);
                 await _db.SaveChangesAsync();
             }
         }

@@ -3,15 +3,13 @@ using Gym13.Extensions;
 using Gym13.Infrastructure.Services;
 using Gym13.Models;
 using Gym13.Domain.Data;
-using Gym13.Domain.DTOs;
+using Gym13.Domain.Models;
 using IdentityServer4.Services;
-using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 using Gym13;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 var migrationsAssembly = "Gym13.Domain";

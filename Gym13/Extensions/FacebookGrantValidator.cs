@@ -1,4 +1,4 @@
-﻿using Gym13.Domain.DTOs;
+﻿using Gym13.Domain.Models;
 using IdentityModel;
 using IdentityServer4.Validation;
 using Microsoft.AspNetCore.Identity;

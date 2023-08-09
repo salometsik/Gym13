@@ -1,5 +1,5 @@
 ﻿using System.Security.Claims;
-using Gym13.Domain.DTOs;
+using Gym13.Domain.Models;
 using IdentityModel;
 using IdentityServer4.Extensions;
 using IdentityServer4.Models;

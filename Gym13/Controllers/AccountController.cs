@@ -1,5 +1,5 @@
 ﻿using Gym13.Application.Interfaces;
-using Gym13.Domain.DTOs;
+using Gym13.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
