@@ -5,7 +5,7 @@ using Gym13.Domain.Data;
 using Gym13.Domain.Models;
 using System.Data.Entity;
 
-namespace Gym13.Application.Services
+/*namespace Gym13.Application.Services
 {
     public class TrainerService : ITrainerService
     {
@@ -87,4 +87,4 @@ namespace Gym13.Application.Services
             }
         }
     }
-}
+}*/

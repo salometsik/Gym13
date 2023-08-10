@@ -6,7 +6,7 @@ using Gym13.Domain.Data;
 using Gym13.Domain.Models;
 using System.Data.Entity;
 
-namespace Gym13.Infrastructure.Services
+/*namespace Gym13.Infrastructure.Services
 {
     public class PlanService : IPlanService
     {
@@ -96,4 +96,4 @@ namespace Gym13.Infrastructure.Services
             }
         }
     }
-}
+}*/

@@ -2,15 +2,23 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using IdentityServer4.EntityFramework.Entities;
+using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
 
 namespace Gym13.Domain.Data
 {
     public class Gym13DbContext : DbContext
     {
-        public Gym13DbContext(DbContextOptions<Gym13DbContext> options) : base(options)
+        readonly IConfiguration configuration;
+        public Gym13DbContext(DbContextOptions<Gym13DbContext> options, IConfiguration configuration) : base(options)
         {
-
+            this.configuration = configuration;
         }
+
+        public Gym13DbContext(DbContextOptions options) : base(options)
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
