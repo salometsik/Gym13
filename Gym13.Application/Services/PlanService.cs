@@ -4,7 +4,6 @@ using Gym13.Application.Models.Plan;
 using Gym13.Common.Enums;
 using Gym13.Domain.Data;
 using Gym13.Domain.Models;
-using System.Data.Entity;
 
 /*namespace Gym13.Infrastructure.Services
 {

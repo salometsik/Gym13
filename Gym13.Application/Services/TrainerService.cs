@@ -3,7 +3,6 @@ using Gym13.Application.Interfaces;
 using Gym13.Application.Models.Trainer;
 using Gym13.Domain.Data;
 using Gym13.Domain.Models;
-using System.Data.Entity;
 
 /*namespace Gym13.Application.Services
 {
