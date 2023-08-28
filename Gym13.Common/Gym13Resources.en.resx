@@ -120,11 +120,11 @@
   <data name="BadRequest" xml:space="preserve">
     <value>Bad request</value>
   </data>
-  <data name="IncorrectData" xml:space="preserve">
-    <value>Provided data is incorrect</value>
+  <data name="EmailExists" xml:space="preserve">
+    <value>User with this email already exists</value>
   </data>
-  <data name="InternalServerError" xml:space="preserve">
-    <value>Internal server error</value>
+  <data name="IncorrectCode" xml:space="preserve">
+    <value>Code is incorrect</value>
   </data>
   <data name="OperationCompleted" xml:space="preserve">
     <value>Operation completed</value>
@@ -132,17 +132,20 @@
   <data name="OperationFailed" xml:space="preserve">
     <value>Operation failed</value>
   </data>
+  <data name="PhoneNumberExists" xml:space="preserve">
+    <value>User with this phone number already exists</value>
+  </data>
   <data name="RecordNotFound" xml:space="preserve">
     <value>Record not found</value>
-  </data>
-  <data name="ServiceUnavailable" xml:space="preserve">
-    <value>Service unavailable</value>
   </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Unauthorized</value>
   </data>
   <data name="UserExists" xml:space="preserve">
     <value>User exists</value>
+  </data>
+  <data name="UserNotExists" xml:space="preserve">
+    <value>User does not exist</value>
   </data>
   <data name="UserOrPasswordIncorrect" xml:space="preserve">
     <value>Username or password is incorrect</value>

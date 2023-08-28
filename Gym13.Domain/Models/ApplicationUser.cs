@@ -14,7 +14,7 @@ namespace Gym13.Domain.Models
         public ApplicationUserStatus Status { get; set; }
         public string? PhonePrefix { get; set; }
         public Gender? Gender { get; set; }
-        public string ValidationCode { get; set; }
-        public DateTime ValidationCodeDateCreated { get; set; }
+        public string? ValidationCode { get; set; }
+        public DateTime? ValidationCodeDateCreated { get; set; }
     }
 }

@@ -120,11 +120,20 @@
   <data name="BadRequest" xml:space="preserve">
     <value>Bad request</value>
   </data>
+  <data name="EmailExists" xml:space="preserve">
+    <value>მომხმარებელი ასეთი ელ.ფოსტით უკვე არსებობს</value>
+  </data>
+  <data name="IncorrectCode" xml:space="preserve">
+    <value>კოდი არასწორია</value>
+  </data>
   <data name="OperationCompleted" xml:space="preserve">
     <value>Operation completed</value>
   </data>
   <data name="OperationFailed" xml:space="preserve">
     <value>Operation failed</value>
+  </data>
+  <data name="PhoneNumberExists" xml:space="preserve">
+    <value>მომხმარებელი ასეთი ტელეფონის ნომრით უკვე არსებობს</value>
   </data>
   <data name="RecordNotFound" xml:space="preserve">
     <value>ჩანაწერი ვერ მოიძებნა</value>
@@ -134,6 +143,9 @@
   </data>
   <data name="UserExists" xml:space="preserve">
     <value>ასეთი მომხმარებელი უკვე არსებობს</value>
+  </data>
+  <data name="UserNotExists" xml:space="preserve">
+    <value>ასეთი მომხმარებელი არ არსებობს</value>
   </data>
   <data name="UserOrPasswordIncorrect" xml:space="preserve">
     <value>ელ.ფოსტა/ტელეფონი ან პაროლი არასწორია</value>

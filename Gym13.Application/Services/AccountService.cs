@@ -1,10 +1,12 @@
 ﻿using Gym13.Application.Interfaces;
+using Gym13.Application.Models;
 using Gym13.Application.Models.Account;
 using Gym13.Common;
 using Gym13.Common.Enums;
 using Gym13.Domain.Data;
 using Gym13.Domain.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
 namespace Gym13.Application.Services
@@ -31,20 +33,22 @@ namespace Gym13.Application.Services
             if (user != null && user.EmailConfirmed)
                 existingUser = user;
             else
-                existingUser = _userManager.Users.FirstOrDefault(u => u.PhoneNumber == request.PhoneNumber
-                    && u.PhoneNumberConfirmed);
-            if (existingUser != null && (existingUser.PhoneNumberConfirmed || existingUser.EmailConfirmed))
+                existingUser = _userManager.Users.FirstOrDefault(u => u.PhoneNumber == request.PhoneNumber);
+            if (existingUser != null)
             {
-                if (existingUser.Status != ApplicationUserStatus.NotConfirmed)
+                if (existingUser.EmailConfirmed && existingUser.Status != ApplicationUserStatus.NotConfirmed)
                     return Fail<RegistrationResponseModel>(message: Gym13Resources.UserExists);
+                else
+                {
+                    existingUser.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(existingUser, request.Password);
+                    GenerateValidationCode(existingUser);
+                    var result = await _userManager.UpdateAsync(existingUser);
+                    if (!result.Succeeded)
+                        return Fail<RegistrationResponseModel>();
 
-                GenerateValidationCode(existingUser);
-                var result = await _userManager.UpdateAsync(existingUser);
-                if (!result.Succeeded)
-                    return Fail<RegistrationResponseModel>();
-
-                await SendValidationCode(existingUser, "რეგისტრაციის დასრულება");
-                return Success(new RegistrationResponseModel { UserId = existingUser.Id });
+                    await SendValidationCode(existingUser, "რეგისტრაციის დასრულება");
+                    return Success(new RegistrationResponseModel { UserId = existingUser.Id });
+                }
             }
             else
             {
@@ -69,6 +73,56 @@ namespace Gym13.Application.Services
             }
         }
 
+        public async Task<BaseResponseModel> ConfirmEmail(ConfirmUserRequestModel request)
+        {
+            var user = await _userManager.FindByIdAsync(request.UserId);
+            if (user == null)
+                return Fail(new BaseResponseModel(), message: Gym13Resources.UserNotExists);
+            if (!user.Email.Equals(request.EmailOrPhone))
+            {
+                var userByEmail = await _userManager.FindByEmailAsync(request.EmailOrPhone);
+                if (userByEmail != null)
+                    return Fail(new BaseResponseModel(), message: Gym13Resources.EmailExists);
+                else
+                    user.Email = request.EmailOrPhone;
+            }
+            var success = ConfirmCode(user, request.Code);
+            if (success)
+            {
+                if (user.Status == ApplicationUserStatus.NotConfirmed)
+                    user.Status = ApplicationUserStatus.Active;
+                user.EmailConfirmed = true;
+                await _userManager.UpdateAsync(user);
+                return Success(new BaseResponseModel());
+            }
+            else
+                return Fail(new BaseResponseModel(), message: Gym13Resources.IncorrectCode);
+        }
+
+        public async Task<BaseResponseModel> ConfirmPhoneNumber(ConfirmUserRequestModel request)
+        {
+            var user = await _userManager.FindByIdAsync(request.UserId);
+            if (user == null)
+                return Fail(new BaseResponseModel(), message: Gym13Resources.UserNotExists);
+            if (!user.PhoneNumber.Equals(request.EmailOrPhone))
+            {
+                var userByPhone = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == request.EmailOrPhone);
+                if (userByPhone != null)
+                    return Fail(new BaseResponseModel(), message: Gym13Resources.PhoneNumberExists);
+                else
+                    user.PhoneNumber = request.EmailOrPhone;
+            }
+            var success = ConfirmCode(user, request.Code);
+            if (success)
+            {
+                user.PhoneNumberConfirmed = true;
+                await _userManager.UpdateAsync(user);
+                return Success(new BaseResponseModel());
+            }
+            else
+                return Fail(new BaseResponseModel(), message: Gym13Resources.IncorrectCode);
+        }
+
         #region Private methods
         static string GenerateValidationCode(ApplicationUser user)
         {
@@ -77,7 +131,6 @@ namespace Gym13.Application.Services
             user.ValidationCodeDateCreated = DateTime.UtcNow.AddHours(4);
             return code;
         }
-
         async Task SendValidationCode(ApplicationUser user, string? subject, bool sendOnEmail = true)
         {
             var text = $"დადასტურების კოდი: {user.ValidationCode}";
@@ -86,7 +139,21 @@ namespace Gym13.Application.Services
             else
                 await _smsSender.SendSmsAsync(user.UserName, text, NotificationType.Registration, user);
         }
-
+        bool ConfirmCode(ApplicationUser user, string code)
+        {
+            if (string.IsNullOrEmpty(user.ValidationCode) || !user.ValidationCodeDateCreated.HasValue)
+                return false;
+            if (user.ValidationCodeDateCreated.HasValue && user.ValidationCodeDateCreated.Value.AddHours(12) < DateTime.UtcNow.AddHours(4))
+                return false;
+            else if (!user.ValidationCode.Equals(code))
+                return false;
+            else
+            {
+                user.ValidationCode = null;
+                user.ValidationCodeDateCreated = null;
+                return true;
+            }
+        }
         #endregion
     }
 }

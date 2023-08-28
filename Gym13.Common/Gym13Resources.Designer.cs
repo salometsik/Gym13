@@ -70,6 +70,24 @@ namespace Gym13.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to მომხმარებელი ასეთი ელ.ფოსტით უკვე არსებობს.
+        /// </summary>
+        public static string EmailExists {
+            get {
+                return ResourceManager.GetString("EmailExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to კოდი არასწორია.
+        /// </summary>
+        public static string IncorrectCode {
+            get {
+                return ResourceManager.GetString("IncorrectCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operation completed.
         /// </summary>
         public static string OperationCompleted {
@@ -84,6 +102,15 @@ namespace Gym13.Common {
         public static string OperationFailed {
             get {
                 return ResourceManager.GetString("OperationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to მომხმარებელი ასეთი ტელეფონის ნომრით უკვე არსებობს.
+        /// </summary>
+        public static string PhoneNumberExists {
+            get {
+                return ResourceManager.GetString("PhoneNumberExists", resourceCulture);
             }
         }
         
@@ -111,6 +138,15 @@ namespace Gym13.Common {
         public static string UserExists {
             get {
                 return ResourceManager.GetString("UserExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ასეთი მომხმარებელი არ არსებობს.
+        /// </summary>
+        public static string UserNotExists {
+            get {
+                return ResourceManager.GetString("UserNotExists", resourceCulture);
             }
         }
         
