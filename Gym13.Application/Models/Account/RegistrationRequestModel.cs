@@ -1,5 +1,4 @@
 ﻿using Gym13.Common.Enums;
-using System.ComponentModel.DataAnnotations;
 
 namespace Gym13.Application.Models.Account
 {
@@ -11,7 +10,6 @@ namespace Gym13.Application.Models.Account
         public string LastName { get; set; }
         public Gender Gender { get; set; }
         public string Password { get; set; }
-        [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
     }
 }
