@@ -1,6 +1,5 @@
 using Gym13.Application.Interfaces;
 using Gym13.Extensions;
-//using Gym13.Infrastructure.Services;
 using Gym13.Models;
 using Gym13.Domain.Data;
 using Gym13.Domain.Models;
@@ -11,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 using Gym13;
 using Gym13.Application.Models;
-//using Gym13.Application.Services;
+using Gym13.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var migrationsAssembly = "Gym13.Domain";
@@ -99,8 +98,11 @@ services.AddIdentityServer(opts =>
     .AddExtensionGrantValidator<FacebookGrantValidator>();
 
 services.AddTransient<IProfileService, ProfileService>();
-//services.AddScoped<IPlanService, PlanService>();
-//services.AddScoped<ITrainerService, TrainerService>();
+services.AddScoped<IPlanService, PlanService>();
+services.AddScoped<ITrainerService, TrainerService>();
+services.AddScoped<IAccountService, AccountService>();
+services.AddTransient<ISmsSender, MessageSender>();
+services.AddTransient<IEmailSender, MessageSender>();
 
 services.AddCors();
 

@@ -3,8 +3,9 @@ using Gym13.Application.Interfaces;
 using Gym13.Application.Models.Trainer;
 using Gym13.Domain.Data;
 using Gym13.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
-/*namespace Gym13.Application.Services
+namespace Gym13.Application.Services
 {
     public class TrainerService : ITrainerService
     {
@@ -86,4 +87,4 @@ using Gym13.Domain.Models;
             }
         }
     }
-}*/
+}

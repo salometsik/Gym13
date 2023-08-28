@@ -37,6 +37,7 @@ namespace Gym13.Application.Services
             {
                 if (existingUser.Status != ApplicationUserStatus.NotConfirmed)
                     return Fail<RegistrationResponseModel>(message: Gym13Resources.UserExists);
+
                 GenerateValidationCode(existingUser);
                 var result = await _userManager.UpdateAsync(existingUser);
                 if (!result.Succeeded)
@@ -56,6 +57,7 @@ namespace Gym13.Application.Services
                     Status = ApplicationUserStatus.NotConfirmed
                 };
 
+                newUser.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(newUser, request.Password);
                 GenerateValidationCode(newUser);
 
                 var result = await _userManager.CreateAsync(newUser);
@@ -68,7 +70,7 @@ namespace Gym13.Application.Services
         }
 
         #region Private methods
-        string GenerateValidationCode(ApplicationUser user)
+        static string GenerateValidationCode(ApplicationUser user)
         {
             var code = new Random(Guid.NewGuid().GetHashCode()).Next(1000, 9999).ToString();
             user.ValidationCode = code;
