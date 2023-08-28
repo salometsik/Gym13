@@ -70,24 +70,6 @@ namespace Gym13.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provided data is incorrect.
-        /// </summary>
-        public static string IncorrectData {
-            get {
-                return ResourceManager.GetString("IncorrectData", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Internal server error.
-        /// </summary>
-        public static string InternalServerError {
-            get {
-                return ResourceManager.GetString("InternalServerError", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Operation completed.
         /// </summary>
         public static string OperationCompleted {
@@ -106,20 +88,11 @@ namespace Gym13.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Record not found.
+        ///   Looks up a localized string similar to ჩანაწერი ვერ მოიძებნა.
         /// </summary>
         public static string RecordNotFound {
             get {
                 return ResourceManager.GetString("RecordNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Service unavailable.
-        /// </summary>
-        public static string ServiceUnavailable {
-            get {
-                return ResourceManager.GetString("ServiceUnavailable", resourceCulture);
             }
         }
         

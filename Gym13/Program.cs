@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography.X509Certificates;
 using Gym13;
+using Gym13.Application.Models;
 //using Gym13.Application.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -58,6 +59,8 @@ services.AddAuthentication(opt =>
         ValidateIssuer = true
     };
 });
+
+services.Configure<SmsSenderOptions>(builder.Configuration.GetSection(nameof(SmsSenderOptions)));
 
 services.AddSwaggerDocumentation(builder.Configuration);
 services.AddHttpContextAccessor();

@@ -120,12 +120,6 @@
   <data name="BadRequest" xml:space="preserve">
     <value>Bad request</value>
   </data>
-  <data name="IncorrectData" xml:space="preserve">
-    <value>Provided data is incorrect</value>
-  </data>
-  <data name="InternalServerError" xml:space="preserve">
-    <value>Internal server error</value>
-  </data>
   <data name="OperationCompleted" xml:space="preserve">
     <value>Operation completed</value>
   </data>
@@ -133,10 +127,7 @@
     <value>Operation failed</value>
   </data>
   <data name="RecordNotFound" xml:space="preserve">
-    <value>Record not found</value>
-  </data>
-  <data name="ServiceUnavailable" xml:space="preserve">
-    <value>Service unavailable</value>
+    <value>ჩანაწერი ვერ მოიძებნა</value>
   </data>
   <data name="Unauthorized" xml:space="preserve">
     <value>Unauthorized</value>
