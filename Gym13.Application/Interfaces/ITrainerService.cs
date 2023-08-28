@@ -6,7 +6,7 @@ namespace Gym13.Application.Interfaces
     {
         Task<List<TrainerModel>> GetTrainers();
         Task AddTrainer(TrainerModel request);
-        Task<TrainerModel> GetTrainer(int id);
+        Task<TrainerModel?> GetTrainer(int id);
         Task UpdateTrainer(TrainerModel request);
         Task DeleteTrainer(int id);
         Task ReactivateTrainer(int id);

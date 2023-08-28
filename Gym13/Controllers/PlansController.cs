@@ -26,7 +26,7 @@ namespace Gym13.Controllers
         public async Task AddPlan(PlanModel plan) => await _planService.AddPlan(plan);
 
         [HttpGet]
-        public async Task<PlanModel> GetPlan(int id) => await _planService.GetPlan(id);
+        public async Task<PlanModel?> GetPlan(int id) => await _planService.GetPlan(id);
 
         [HttpPut]
         public async Task UpdatePlan(PlanModel request) => await _planService.UpdatePlan(request);

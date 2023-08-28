@@ -11,12 +11,10 @@ namespace Gym13.Application.Services
     public class PlanService : IPlanService
     {
         readonly Gym13DbContext _db;
-        readonly IMapper _mapper;
 
-        public PlanService(Gym13DbContext db, IMapper mapper)
+        public PlanService(Gym13DbContext db)
         {
             _db = db;
-            _mapper = mapper;
         }
 
         public async Task<List<PlanModel>> GetPlans(bool? unlimited, PlanPeriodType? periodType)
@@ -42,15 +40,37 @@ namespace Gym13.Application.Services
 
         public async Task AddPlan(PlanModel request)
         {
-            var plan = _mapper.Map<Plan>(request);
+            var plan = new Plan
+            {
+                Title = request.Title,
+                Price = request.Price,
+                PeriodNumber = request.PeriodNumber,
+                PeriodType = request.PeriodType,
+                HourFrom = request.HourFrom,
+                HourTo = request.HourTo,
+                IsUnlimited = request.IsUnlimited
+            };
             await _db.Plans.AddAsync(plan);
             await _db.SaveChangesAsync();
         }
 
-        public async Task<PlanModel> GetPlan(int id)
+        public async Task<PlanModel?> GetPlan(int id)
         {
             var plan = await _db.Plans.FirstOrDefaultAsync(x => x.PlanId == id);
-            return _mapper.Map<PlanModel>(plan);
+            if (plan == null)
+                return null;
+            var planModel = new PlanModel
+            {
+                PlanId = plan.PlanId,
+                Title = plan.Title,
+                Price = plan.Price,
+                PeriodNumber = plan.PeriodNumber,
+                PeriodType = plan.PeriodType,
+                HourFrom = plan.HourFrom,
+                HourTo = plan.HourTo,
+                IsUnlimited = plan.IsUnlimited
+            };
+            return planModel;
         }
 
         public async Task UpdatePlan(PlanModel request)
@@ -58,8 +78,17 @@ namespace Gym13.Application.Services
             var plan = await _db.Plans.FirstOrDefaultAsync(x => x.PlanId == request.PlanId);
             if (plan != null)
             {
-                plan = _mapper.Map<Plan>(request);
-                plan.UpdateDate = DateTime.UtcNow.AddHours(4);
+                plan = new Plan
+                {
+                    Title = request.Title,
+                    Price = request.Price,
+                    PeriodNumber = request.PeriodNumber,
+                    PeriodType = request.PeriodType,
+                    HourFrom = request.HourFrom,
+                    HourTo = request.HourTo,
+                    IsUnlimited = request.IsUnlimited,
+                    UpdateDate = DateTime.UtcNow.AddHours(4)
+                };
                 await _db.SaveChangesAsync();
             }
         }

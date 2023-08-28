@@ -15,10 +15,6 @@ namespace Gym13.Domain.Data
             
         }
 
-        public Gym13DbContext(DbContextOptions options) : base(options)
-        {
-        }
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

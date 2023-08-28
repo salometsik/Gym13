@@ -10,12 +10,10 @@ namespace Gym13.Application.Services
     public class TrainerService : ITrainerService
     {
         readonly Gym13DbContext _db;
-        readonly IMapper _mapper;
 
-        public TrainerService(Gym13DbContext db, IMapper mapper)
+        public TrainerService(Gym13DbContext db)
         {
             _db = db;
-            _mapper = mapper;
         }
 
         public async Task<List<TrainerModel>> GetTrainers()
@@ -33,15 +31,33 @@ namespace Gym13.Application.Services
 
         public async Task AddTrainer(TrainerModel request)
         {
-            var trainer = _mapper.Map<Trainer>(request);
+            var trainer = new Trainer
+            {
+                Name = request.Name,
+                FacebookUrl = request.FacebookUrl,
+                InstagramUrl = request.InstagramUrl,
+                TwitterUrl = request.TwitterUrl,
+                ImageUrl = request.ImageUrl
+            };
             await _db.Trainers.AddAsync(trainer);
             await _db.SaveChangesAsync();
         }
 
-        public async Task<TrainerModel> GetTrainer(int id)
+        public async Task<TrainerModel?> GetTrainer(int id)
         {
             var trainer = await _db.Trainers.FirstOrDefaultAsync(x => x.TrainerId == id);
-            return _mapper.Map<TrainerModel>(trainer);
+            if (trainer == null)
+                return null;
+            var model = new TrainerModel
+            {
+                TrainerId = trainer.TrainerId,
+                Name = trainer.Name,
+                FacebookUrl = trainer.FacebookUrl,
+                InstagramUrl = trainer.InstagramUrl,
+                TwitterUrl = trainer.TwitterUrl,
+                ImageUrl = trainer.ImageUrl
+            };
+            return model;
         }
 
         public async Task UpdateTrainer(TrainerModel request)
@@ -49,8 +65,15 @@ namespace Gym13.Application.Services
             var trainer = await _db.Trainers.FirstOrDefaultAsync(x => x.TrainerId == request.TrainerId);
             if (trainer != null)
             {
-                trainer = _mapper.Map<Trainer>(request);
-                trainer.UpdateDate = DateTime.UtcNow.AddHours(4);
+                trainer = new Trainer
+                {
+                    Name = request.Name,
+                    FacebookUrl = request.FacebookUrl,
+                    InstagramUrl = request.InstagramUrl,
+                    TwitterUrl = request.TwitterUrl,
+                    ImageUrl = request.ImageUrl,
+                    UpdateDate = DateTime.UtcNow.AddHours(4)
+                };
                 await _db.SaveChangesAsync();
             }
         }
