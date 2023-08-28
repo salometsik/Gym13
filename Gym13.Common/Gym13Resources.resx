@@ -150,4 +150,10 @@
   <data name="UserOrPasswordIncorrect" xml:space="preserve">
     <value>ელ.ფოსტა/ტელეფონი ან პაროლი არასწორია</value>
   </data>
+  <data name="UserOrPhoneNull" xml:space="preserve">
+    <value>გთხოვთ შეიყვანოთ ელ.ფოსტა/ტელეფონი</value>
+  </data>
+  <data name="ValidationCodeNull" xml:space="preserve">
+    <value>გთხოვთ შეიყვანოთ დადასტურების კოდი</value>
+  </data>
 </root>

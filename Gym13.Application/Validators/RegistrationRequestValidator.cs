@@ -3,7 +3,7 @@ using Gym13.Application.Models.Account;
 
 namespace Gym13.Application.Validators
 {
-    public class RegistrationRequestValidator : AbstractValidator<RegistrationRequestModel>
+    public sealed class RegistrationRequestValidator : AbstractValidator<RegistrationRequestModel>
     {
         public RegistrationRequestValidator()
         {

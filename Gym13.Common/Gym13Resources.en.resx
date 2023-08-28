@@ -150,4 +150,10 @@
   <data name="UserOrPasswordIncorrect" xml:space="preserve">
     <value>Username or password is incorrect</value>
   </data>
+  <data name="UserOrPhoneNull" xml:space="preserve">
+    <value>Please enter Email/Phone Number </value>
+  </data>
+  <data name="ValidationCodeNull" xml:space="preserve">
+    <value>Please enter validation code</value>
+  </data>
 </root>

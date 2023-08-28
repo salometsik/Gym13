@@ -158,5 +158,23 @@ namespace Gym13.Common {
                 return ResourceManager.GetString("UserOrPasswordIncorrect", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to გთხოვთ შეიყვანოთ ელ.ფოსტა/ტელეფონი.
+        /// </summary>
+        public static string UserOrPhoneNull {
+            get {
+                return ResourceManager.GetString("UserOrPhoneNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to გთხოვთ შეიყვანოთ დადასტურების კოდი.
+        /// </summary>
+        public static string ValidationCodeNull {
+            get {
+                return ResourceManager.GetString("ValidationCodeNull", resourceCulture);
+            }
+        }
     }
 }

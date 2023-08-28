@@ -139,7 +139,7 @@ namespace Gym13.Application.Services
             else
                 await _smsSender.SendSmsAsync(user.UserName, text, NotificationType.Registration, user);
         }
-        bool ConfirmCode(ApplicationUser user, string code)
+        static bool ConfirmCode(ApplicationUser user, string code)
         {
             if (string.IsNullOrEmpty(user.ValidationCode) || !user.ValidationCodeDateCreated.HasValue)
                 return false;
