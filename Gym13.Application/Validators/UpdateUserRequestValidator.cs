@@ -5,9 +5,9 @@ using System.Text.RegularExpressions;
 
 namespace Gym13.Application.Validators
 {
-    public sealed class RegistrationRequestValidator : AbstractValidator<RegistrationRequestModel>
+    public sealed class UpdateUserRequestValidator : AbstractValidator<UpdateUserRequestModel>
     {
-        public RegistrationRequestValidator()
+        public UpdateUserRequestValidator()
         {
             RuleFor(x => x.FirstName).NotNull().NotEmpty();
             RuleFor(x => x.LastName).NotNull().NotEmpty();
@@ -15,10 +15,6 @@ namespace Gym13.Application.Validators
                 .Must(x => ValidateEmailOrPhone.IsValidEmail(x)).WithMessage(Gym13Resources.IncorrectData);
             RuleFor(x => x.PhoneNumber).NotNull().NotEmpty()
                 .Must(x => Regex.IsMatch(x, @"^\d{9}$")).WithMessage(Gym13Resources.IncorrectData);
-            RuleFor(x => x.Password).NotNull().NotEmpty().MinimumLength(6)
-                .WithMessage(Gym13Resources.PasswordMustContainSixCharacters);
-            RuleFor(x => x.ConfirmPassword).NotNull().NotEmpty().MinimumLength(6).Equal(x => x.Password)
-                .WithMessage(Gym13Resources.PasswordsMustMatch);
         }
     }
 }

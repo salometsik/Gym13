@@ -70,6 +70,15 @@ namespace Gym13.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ელ.ფოსტა უკვე დადასტურებულია.
+        /// </summary>
+        public static string EmailAlreadyConfirmed {
+            get {
+                return ResourceManager.GetString("EmailAlreadyConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to მომხმარებელი ასეთი ელ.ფოსტით უკვე არსებობს.
         /// </summary>
         public static string EmailExists {
@@ -88,6 +97,15 @@ namespace Gym13.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to გთხოვთ შეიყვანოთ სწორი მონაცემები.
+        /// </summary>
+        public static string IncorrectData {
+            get {
+                return ResourceManager.GetString("IncorrectData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operation completed.
         /// </summary>
         public static string OperationCompleted {
@@ -102,6 +120,33 @@ namespace Gym13.Common {
         public static string OperationFailed {
             get {
                 return ResourceManager.GetString("OperationFailed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to პაროლი უნდა შეიცავდეს 6 სიმბოლოს მაინც.
+        /// </summary>
+        public static string PasswordMustContainSixCharacters {
+            get {
+                return ResourceManager.GetString("PasswordMustContainSixCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to პაროლები უნდა ემთხვეოდეს.
+        /// </summary>
+        public static string PasswordsMustMatch {
+            get {
+                return ResourceManager.GetString("PasswordsMustMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ტელეფონის ნომერი უკვე დამოწმებულია.
+        /// </summary>
+        public static string PhoneAlreadyConfirmed {
+            get {
+                return ResourceManager.GetString("PhoneAlreadyConfirmed", resourceCulture);
             }
         }
         

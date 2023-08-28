@@ -8,8 +8,8 @@ namespace Gym13.Domain.Models
         public ApplicationUser() => RegistrationDate = DateTime.UtcNow.AddHours(4);
         public DateTime RegistrationDate { get; set; }
         public DateTime? BirthDate { get; set; }
-        public string? FirstName { get; set; }
-        public string? LastName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
         public string? PersonalNumber { get; set; }
         public ApplicationUserStatus Status { get; set; }
         public string? PhonePrefix { get; set; }

@@ -21,41 +21,70 @@ namespace Gym13.Controllers
             _accountService = accountService;
         }
 
+        [HttpGet]
+        [UserAuthorize]
+        public async Task<UserProfileModel> GetUser(string userId) => await _accountService.GetUser(userId);
+
         [HttpPost("register")]
         public async Task<RegistrationResponseModel> Register(RegistrationRequestModel request)
             => await _accountService.CreateAccount(request);
 
+        [HttpPut]
+        [UserAuthorize]
+        public async Task<BaseResponseModel> UpdateUser(UpdateUserRequestModel request)
+        {
+            var model = new UpdateUserModel
+            {
+                UserId = UserId,
+                Email = request.Email,
+                PhoneNumber = request.PhoneNumber,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Gender = request.Gender,
+                BirthDate = request.BirthDate
+            };
+            return await _accountService.UpdateUser(model);
+        }
+
         [HttpPut("confirm-user")]
-        public async Task<BaseResponseModel> ConfirmUser(ConfirmUserRequestModel request)
-            => await _accountService.ConfirmEmail(request);
+        public async Task<BaseResponseModel> ConfirmUser(ConfirmEmailOrPhoneRequestModel request)
+            => await _accountService.ConfirmValidationCode(null, request.EmailOrPhone, request.Code);
 
-        [HttpPut("confirm-email")]
+        [HttpPut("confirm-code")]
         [UserAuthorize]
-        public async Task<BaseResponseModel> ConfirmEmail(ConfirmEmailOrPhoneRequestModel request)
+        public async Task<BaseResponseModel> ConfirmCode(ConfirmEmailOrPhoneRequestModel request)
+            => await _accountService.ConfirmValidationCode(UserId, request.EmailOrPhone, request.Code);
+
+        [HttpPatch("send-code-from-profile")]
+        [UserAuthorize]
+        public async Task SendCodeFromProfile(string to) => await _accountService.SendCodeFromProfile(to, UserId);
+
+        [HttpPatch("send-validation-code")]
+        public async Task SendValidationCode(string to) => await _accountService.SendValidationCode(to);
+
+        [HttpPatch("reset-password")]
+        public async Task ResetPassword(ResetPasswordRequestModel request)
         {
-            var requestModel = new ConfirmUserRequestModel
+            var model = new UpdatePasswordModel
             {
-                Code = request.Code,
                 EmailOrPhone = request.EmailOrPhone,
-                UserId = UserId
+                Password = request.Password
             };
-            return await _accountService.ConfirmEmail(requestModel);
+            await _accountService.UpdatePassword(model);
         }
 
-        [HttpPut("confirm-phone")]
+        [HttpPatch("change-password")]
         [UserAuthorize]
-        public async Task<BaseResponseModel> ConfirmPhoneNumber(ConfirmEmailOrPhoneRequestModel request)
+        public async Task ChangePassword(ChangePasswordRequestModel request)
         {
-            var requestModel = new ConfirmUserRequestModel
+            var model = new UpdatePasswordModel
             {
-                Code = request.Code,
-                EmailOrPhone = request.EmailOrPhone,
-                UserId = UserId
+                UserId = UserId,
+                Password = request.Password,
+                CurrentPassword = request.CurrentPassword
             };
-            return await _accountService.ConfirmPhoneNumber(requestModel);
+            await _accountService.UpdatePassword(model);
         }
 
-        //[HttpGet]
-        //public async Task<ApplicationUser?> GetUser(string userId) => await _accountService.GetUser(userId);
     }
 }

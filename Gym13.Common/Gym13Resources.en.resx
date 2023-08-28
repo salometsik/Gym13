@@ -120,17 +120,32 @@
   <data name="BadRequest" xml:space="preserve">
     <value>Bad request</value>
   </data>
+  <data name="EmailAlreadyConfirmed" xml:space="preserve">
+    <value>Email is already confirmed</value>
+  </data>
   <data name="EmailExists" xml:space="preserve">
     <value>User with this email already exists</value>
   </data>
   <data name="IncorrectCode" xml:space="preserve">
     <value>Code is incorrect</value>
   </data>
+  <data name="IncorrectData" xml:space="preserve">
+    <value>Please enter valid data</value>
+  </data>
   <data name="OperationCompleted" xml:space="preserve">
     <value>Operation completed</value>
   </data>
   <data name="OperationFailed" xml:space="preserve">
     <value>Operation failed</value>
+  </data>
+  <data name="PasswordMustContainSixCharacters" xml:space="preserve">
+    <value>Password must contain at least 6 characters</value>
+  </data>
+  <data name="PasswordsMustMatch" xml:space="preserve">
+    <value>პაროლები უნდა ემთხვეოდეს</value>
+  </data>
+  <data name="PhoneAlreadyConfirmed" xml:space="preserve">
+    <value>Phone number is already confirmed</value>
   </data>
   <data name="PhoneNumberExists" xml:space="preserve">
     <value>User with this phone number already exists</value>

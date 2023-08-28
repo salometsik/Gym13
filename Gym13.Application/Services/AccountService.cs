@@ -1,6 +1,7 @@
 ﻿using Gym13.Application.Interfaces;
 using Gym13.Application.Models;
 using Gym13.Application.Models.Account;
+using Gym13.Application.Validators;
 using Gym13.Common;
 using Gym13.Common.Enums;
 using Gym13.Domain.Data;
@@ -8,6 +9,8 @@ using Gym13.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Gym13.Application.Services
 {
@@ -46,7 +49,7 @@ namespace Gym13.Application.Services
                     if (!result.Succeeded)
                         return Fail<RegistrationResponseModel>();
 
-                    await SendValidationCode(existingUser, "რეგისტრაციის დასრულება");
+                    await SendCode(existingUser, "რეგისტრაციის დასრულება");
                     return Success(new RegistrationResponseModel { UserId = existingUser.Id });
                 }
             }
@@ -58,6 +61,7 @@ namespace Gym13.Application.Services
                     FirstName = request.FirstName,
                     LastName = request.LastName,
                     Gender = request.Gender,
+                    BirthDate = request.BirthDate,
                     Status = ApplicationUserStatus.NotConfirmed
                 };
 
@@ -68,59 +72,174 @@ namespace Gym13.Application.Services
                 if (!result.Succeeded)
                     return Fail<RegistrationResponseModel>(message: Gym13Resources.BadRequest);
 
-                await SendValidationCode(existingUser, "რეგისტრაციის დასრულება");
+                await SendCode(existingUser, "რეგისტრაციის დასრულება");
                 return Success(new RegistrationResponseModel { UserId = newUser.Id });
             }
         }
 
-        public async Task<BaseResponseModel> ConfirmEmail(ConfirmUserRequestModel request)
+        public async Task<BaseResponseModel> ConfirmValidationCode(string? userId, string emailOrPhone, string code)
         {
-            var user = await _userManager.FindByIdAsync(request.UserId);
-            if (user == null)
-                return Fail(new BaseResponseModel(), message: Gym13Resources.UserNotExists);
-            if (!user.Email.Equals(request.EmailOrPhone))
+            ApplicationUser? user = null;
+            if (!string.IsNullOrEmpty(userId))
             {
-                var userByEmail = await _userManager.FindByEmailAsync(request.EmailOrPhone);
-                if (userByEmail != null)
-                    return Fail(new BaseResponseModel(), message: Gym13Resources.EmailExists);
+                user = await _userManager.FindByIdAsync(userId);
+                if (user == null)
+                    return Fail<BaseResponseModel>(message: Gym13Resources.UserNotExists);
+                var isPhone = ValidateEmailOrPhone.IsValidPhone(emailOrPhone);
+                if (isPhone)
+                {
+                    if (ConfirmCode(user, code))
+                    {
+                        user.PhoneNumber = emailOrPhone;
+                        user.PhoneNumberConfirmed = true;
+                    }
+                    else
+                        return Fail<BaseResponseModel>(message: Gym13Resources.IncorrectCode);
+                }
                 else
-                    user.Email = request.EmailOrPhone;
+                {
+                    if (ConfirmCode(user, code))
+                    {
+                        user.Email = emailOrPhone;
+                        user.EmailConfirmed = true;
+                    }
+                    else
+                        return Fail<BaseResponseModel>(message: Gym13Resources.IncorrectCode);
+                }
+                await _userManager.UpdateAsync(user);
+                return Success<BaseResponseModel>();
             }
-            var success = ConfirmCode(user, request.Code);
-            if (success)
+            user = await _userManager.FindByEmailAsync(emailOrPhone);
+            if (user == null)
+                return Fail<BaseResponseModel>(message: Gym13Resources.UserNotExists);
+
+            if (ConfirmCode(user, code))
             {
-                if (user.Status == ApplicationUserStatus.NotConfirmed)
-                    user.Status = ApplicationUserStatus.Active;
                 user.EmailConfirmed = true;
                 await _userManager.UpdateAsync(user);
-                return Success(new BaseResponseModel());
+                return Success<BaseResponseModel>();
             }
             else
-                return Fail(new BaseResponseModel(), message: Gym13Resources.IncorrectCode);
+                return Fail<BaseResponseModel>(message: Gym13Resources.IncorrectCode);
+
         }
 
-        public async Task<BaseResponseModel> ConfirmPhoneNumber(ConfirmUserRequestModel request)
+        public async Task<BaseResponseModel> SendCodeFromProfile(string to, string userId)
         {
-            var user = await _userManager.FindByIdAsync(request.UserId);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
-                return Fail(new BaseResponseModel(), message: Gym13Resources.UserNotExists);
-            if (!user.PhoneNumber.Equals(request.EmailOrPhone))
+                return Fail<BaseResponseModel>(message: Gym13Resources.UserNotExists);
+            var userByEmail = await _userManager.FindByEmailAsync(to);
+            if (userByEmail != null)
             {
-                var userByPhone = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == request.EmailOrPhone);
-                if (userByPhone != null)
-                    return Fail(new BaseResponseModel(), message: Gym13Resources.PhoneNumberExists);
-                else
-                    user.PhoneNumber = request.EmailOrPhone;
+                if (!user.Id.Equals(userByEmail.Id))
+                    return Fail<BaseResponseModel>(message: Gym13Resources.EmailExists);
+                else if (user.EmailConfirmed)
+                    return Success(new BaseResponseModel(), message: Gym13Resources.EmailAlreadyConfirmed);
             }
-            var success = ConfirmCode(user, request.Code);
-            if (success)
+            var userByPhone = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == to);
+            if (userByPhone != null)
             {
-                user.PhoneNumberConfirmed = true;
-                await _userManager.UpdateAsync(user);
-                return Success(new BaseResponseModel());
+                if (!userByPhone.Id.Equals(user.Id))
+                    return Fail<BaseResponseModel>(message: Gym13Resources.PhoneNumberExists);
+                else if (user.PhoneNumberConfirmed)
+                    return Success(new BaseResponseModel(), message: Gym13Resources.PhoneAlreadyConfirmed);
+                else
+                {
+                    GenerateValidationCode(user);
+                    await SendCode(user, null, false);
+                    return Success<BaseResponseModel>();
+                }
+            }
+            bool sendOnEmail = false;
+            var isPhone = ValidateEmailOrPhone.IsValidPhone(to);
+            if (!isPhone)
+                sendOnEmail = ValidateEmailOrPhone.IsValidEmail(to);
+            if (isPhone || sendOnEmail)
+            {
+                string? subject = sendOnEmail ? "ელ.ფოსტის დადასტურების კოდი" : null;
+                GenerateValidationCode(user);
+                await SendCode(user, subject, sendOnEmail);
+                return Success<BaseResponseModel>();
+            }
+            return Fail<BaseResponseModel>(message: Gym13Resources.IncorrectData);
+        }
+
+        public async Task<BaseResponseModel> SendValidationCode(string to)
+        {
+            var sendOnEmail = false;
+            var user = await _userManager.FindByEmailAsync(to);
+            if (user == null)
+            {
+                user = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == to);
+                if (user == null)
+                    return Fail<BaseResponseModel>(message: Gym13Resources.UserNotExists);
             }
             else
-                return Fail(new BaseResponseModel(), message: Gym13Resources.IncorrectCode);
+                sendOnEmail = true;
+            GenerateValidationCode(user);
+            var subject = sendOnEmail ? "დადასტურების კოდი" : null;
+            await SendCode(user, subject, sendOnEmail);
+            return Success<BaseResponseModel>();
+        }
+
+        public async Task<BaseResponseModel> UpdatePassword(UpdatePasswordModel model)
+        {
+            if (!string.IsNullOrEmpty(model.UserId) && !string.IsNullOrEmpty(model.CurrentPassword))
+            {
+                var user = await _userManager.FindByIdAsync(model.UserId);
+                if (user == null)
+                    return Fail<BaseResponseModel>(message: Gym13Resources.UserNotExists);
+                if (!await _userManager.CheckPasswordAsync(user, model.CurrentPassword))
+                    return Fail<BaseResponseModel>(message: Gym13Resources.UserOrPasswordIncorrect);
+                user.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(user, model.Password);
+                await _userManager.UpdateAsync(user);
+                return Success<BaseResponseModel>();
+            }
+            var usr = await _userManager.FindByEmailAsync(model.EmailOrPhone);
+            if (usr == null)
+            {
+                usr = await _userManager.Users.FirstOrDefaultAsync(u => u.PhoneNumber == model.EmailOrPhone);
+                if (usr == null)
+                    return Fail<BaseResponseModel>(message: Gym13Resources.UserNotExists);
+            }
+            usr.PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(usr, model.Password);
+            await _userManager.UpdateAsync(usr);
+            return Success<BaseResponseModel>();
+
+        }
+
+        public async Task<UserProfileModel> GetUser(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                return Fail<UserProfileModel>(message: Gym13Resources.UserNotExists);
+            var response = new UserProfileModel
+            {
+                UserId = user.Id,
+                PhoneNumber = user.PhoneNumber,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Gender = user.Gender,
+                BirthDate = user.BirthDate
+            };
+            return Success(response);
+        }
+
+        public async Task<BaseResponseModel> UpdateUser(UpdateUserModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user == null)
+                return Fail<BaseResponseModel>(message: Gym13Resources.UserNotExists);
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.Gender = model.Gender;
+            user.BirthDate = model.BirthDate;
+            await _userManager.UpdateAsync(user);
+            return Success<BaseResponseModel>();
         }
 
         #region Private methods
@@ -131,7 +250,7 @@ namespace Gym13.Application.Services
             user.ValidationCodeDateCreated = DateTime.UtcNow.AddHours(4);
             return code;
         }
-        async Task SendValidationCode(ApplicationUser user, string? subject, bool sendOnEmail = true)
+        async Task SendCode(ApplicationUser user, string? subject, bool sendOnEmail = true)
         {
             var text = $"დადასტურების კოდი: {user.ValidationCode}";
             if (sendOnEmail)
