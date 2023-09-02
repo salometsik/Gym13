@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 using Gym13.Application.Models.Account;
-using Gym13.Common;
+using Gym13.Common.Resources;
 
 namespace Gym13.Application.Validators
 {

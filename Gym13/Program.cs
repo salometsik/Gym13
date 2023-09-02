@@ -62,6 +62,7 @@ services.AddAuthentication(opt =>
 services.Configure<SmsSenderOptions>(builder.Configuration.GetSection(nameof(SmsSenderOptions)));
 
 services.AddSwaggerDocumentation(builder.Configuration);
+services.AddCustomLocalization();
 services.AddHttpContextAccessor();
 services.AddMemoryCache();
 

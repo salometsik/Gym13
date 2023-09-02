@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="Gym13Resources.Designer.cs">
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Resources\Gym13Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Gym13Resources.resx</DependentUpon>
@@ -15,11 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Gym13Resources.resx">
+    <EmbeddedResource Update="Resources\Gym13Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Gym13Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Gym13Resources.en.resx">
+    <EmbeddedResource Update="Resources\Gym13Resources.en.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>

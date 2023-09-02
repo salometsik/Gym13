@@ -2,15 +2,12 @@
 using Gym13.Application.Models;
 using Gym13.Application.Models.Account;
 using Gym13.Application.Validators;
-using Gym13.Common;
 using Gym13.Common.Enums;
+using Gym13.Common.Resources;
 using Gym13.Domain.Data;
 using Gym13.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using System.Globalization;
-using System.Text.RegularExpressions;
 
 namespace Gym13.Application.Services
 {

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Gym13.Common {
+namespace Gym13.Common.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Gym13.Common {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gym13.Common.Gym13Resources", typeof(Gym13Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Gym13.Common.Resources.Gym13Resources", typeof(Gym13Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
