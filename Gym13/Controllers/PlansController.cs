@@ -22,11 +22,11 @@ namespace Gym13.Controllers
         public async Task<List<PlanModel>> GetPlans(PlanPeriodType? periodType)
             => await _planService.GetPlans(periodType);
 
-        [HttpPost]
-        public async Task AddPlan(PlanModel plan) => await _planService.AddPlan(plan);
-
         [HttpGet]
         public async Task<PlanModel?> GetPlan(int id) => await _planService.GetPlan(id);
+
+        [HttpPost]
+        public async Task AddPlan(PlanModel plan) => await _planService.AddPlan(plan);
 
         [HttpPut]
         public async Task UpdatePlan(PlanModel request) => await _planService.UpdatePlan(request);

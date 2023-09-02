@@ -4,7 +4,6 @@ using Gym13.Common.Enums;
 using Gym13.Domain.Data;
 using Gym13.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
 
 namespace Gym13.Application.Services
 {
@@ -70,7 +69,7 @@ namespace Gym13.Application.Services
                 PlanServices = plan.PlanServices.Select(i => new PlanServicesItem
                 {
                     Id = i.PlanServiceId,
-                    Title = JsonConvert.DeserializeObject<TextLocalization>(i.Title).KA
+                    Title = new TextLocalization(i.Title).KA
                 }).ToList()
             };
             return planModel;
@@ -135,8 +134,8 @@ namespace Gym13.Application.Services
             var resp = planServices.Select(i => new PlanServiceModel
             {
                 PlanServiceId = i.PlanServiceId,
-                TitleKa = JsonConvert.DeserializeObject<TextLocalization>(i.Title).KA,
-                TitleEn = JsonConvert.DeserializeObject<TextLocalization>(i.Title).EN
+                TitleKa = new TextLocalization(i.Title).KA,
+                TitleEn = new TextLocalization(i.Title).EN
             }).ToList();
             return resp;
         }
@@ -157,8 +156,8 @@ namespace Gym13.Application.Services
             var resp = new PlanServiceModel
             {
                 PlanServiceId = planService.PlanServiceId,
-                TitleKa = JsonConvert.DeserializeObject<TextLocalization>(planService.Title).KA,
-                TitleEn = JsonConvert.DeserializeObject<TextLocalization>(planService.Title).EN
+                TitleKa = new TextLocalization(planService.Title).KA,
+                TitleEn = new TextLocalization(planService.Title).EN
             };
             return resp;
         }
