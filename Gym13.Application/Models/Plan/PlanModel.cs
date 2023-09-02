@@ -12,5 +12,11 @@ namespace Gym13.Application.Models.Plan
         public int? HourTo { get; set; }
         public PlanPeriodType PeriodType { get; set; }
         public bool IsUnlimited { get; set; }
+        public List<PlanServicesItem> PlanServices { get; set; }
+    }
+    public class PlanServicesItem
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
     }
 }

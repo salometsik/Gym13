@@ -3,6 +3,7 @@ using System;
 using Gym13.Domain.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Gym13.Domain.Migrations
 {
     [DbContext(typeof(Gym13DbContext))]
-    partial class Gym13DbContextModelSnapshot : ModelSnapshot
+    [Migration("20230902133553_PlanService")]
+    partial class PlanService
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,15 +192,14 @@ namespace Gym13.Domain.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
+                    b.Property<bool>("IsUnlimited")
+                        .HasColumnType("boolean");
+
                     b.Property<int>("PeriodNumber")
                         .HasColumnType("integer");
 
                     b.Property<int>("PeriodType")
                         .HasColumnType("integer");
-
-                    b.Property<string>("PlanServiceIds")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");

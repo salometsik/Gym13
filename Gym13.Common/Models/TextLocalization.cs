@@ -42,21 +42,17 @@ public class TextLocalization
 
 
     [JsonConstructor]
-    protected TextLocalization(string? ka, string? en, bool craeteserialized = false)
+    protected TextLocalization(string? ka, string? en)
     {
         KA = ka;
         EN = en;
-        if (craeteserialized)
-        {
-            string jsonString = JsonConvert.SerializeObject(new { KA = ka, EN = en });
-            SerializedText = jsonString;
-        }
-
+        string jsonString = JsonConvert.SerializeObject(new { KA = ka, EN = en });
+        SerializedText = jsonString;
     }
 
     public static TextLocalization Create(string? ka, string? en)
     {
-        return new TextLocalization(ka, en, true);
+        return new TextLocalization(ka, en);
     }
 }
 public class LocalizationHelper

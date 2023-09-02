@@ -19,8 +19,8 @@ namespace Gym13.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<List<PlanModel>> GetPlans(bool? unlimited, PlanPeriodType? periodType)
-            => await _planService.GetPlans(unlimited, periodType);
+        public async Task<List<PlanModel>> GetPlans(PlanPeriodType? periodType)
+            => await _planService.GetPlans(periodType);
 
         [HttpPost]
         public async Task AddPlan(PlanModel plan) => await _planService.AddPlan(plan);
@@ -31,13 +31,13 @@ namespace Gym13.Controllers
         [HttpPut]
         public async Task UpdatePlan(PlanModel request) => await _planService.UpdatePlan(request);
 
-        [HttpDelete]
-        public async Task DeletePlan(int id) => await _planService.DeletePlan(id);
+        [HttpPatch("deactivate")]
+        public async Task DeactivatePlan(int id) => await _planService.DeactivatePlan(id);
 
         [HttpPatch("reactivate")]
         public async Task ReactivatePlan(int id) => await _planService.ReactivatePlan(id);
 
-        [HttpPatch("deactivate")]
-        public async Task DeactivatePlan(int id) => await _planService.DeactivatePlan(id);
+        [HttpDelete]
+        public async Task DeletePlan(int id) => await _planService.DeletePlan(id);
     }
 }

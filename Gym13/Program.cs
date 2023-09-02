@@ -99,7 +99,7 @@ services.AddIdentityServer(opts =>
     .AddExtensionGrantValidator<FacebookGrantValidator>();
 
 services.AddTransient<IProfileService, ProfileService>();
-services.AddScoped<IPlanService, PlanService>();
+services.AddScoped<IPlanService, Gym13.Application.Services.PlanService>();
 services.AddScoped<ITrainerService, TrainerService>();
 services.AddScoped<IAccountService, AccountService>();
 services.AddTransient<ISmsSender, MessageSender>();

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using IdentityServer4.EntityFramework.Entities;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Gym13.Domain.Data
@@ -30,6 +29,7 @@ namespace Gym13.Domain.Data
             builder.Entity<DeviceFlowCodes>().ToTable("DeviceFlowCodes").HasKey(x => x.UserCode);
         }
         public DbSet<Plan> Plans { get; set; }
+        public DbSet<PlanService> PlanServices { get; set; }
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<Notification> Notifications { get; set; }
     }
