@@ -1,7 +1,5 @@
 ﻿using Gym13.Application.Interfaces;
-using Gym13.Application.Models.Plan;
 using Gym13.Application.Models.Trainer;
-using Gym13.Common.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -20,9 +18,11 @@ namespace Gym13.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<List<TrainerModel>> GetTrainers(PlanPeriodType? periodType)
-            => await _trainerService.GetTrainers();
+        public async Task<List<TrainerModel>> GetTrainers(int? pageSize) => await _trainerService.GetTrainerList(pageSize);
 
+        [HttpGet("details")]
+        public async Task<TrainerResponseModel> GetTrainerDetails(int id) => await _trainerService.GetTrainerDetails(id);
+        #region Manage
         [HttpGet]
         public async Task<TrainerModel?> GetPlan(int id) => await _trainerService.GetTrainer(id);
 
@@ -40,5 +40,6 @@ namespace Gym13.Controllers
 
         [HttpDelete]
         public async Task DeletePlan(int id) => await _trainerService.DeleteTrainer(id);
+        #endregion
     }
 }

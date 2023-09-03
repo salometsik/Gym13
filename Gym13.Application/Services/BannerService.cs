@@ -19,7 +19,7 @@ namespace Gym13.Application.Services
         #region Manage
         public async Task<List<BannerModel>> GetBannerList()
         {
-            var banners = _db.Banners.OrderBy(b => b.BannerId).ToList();
+            var banners = _db.Banners.OrderByDescending(b => b.BannerId).ToList();
             var resp = banners.Select(i => new BannerModel
             {
                 BannerId = i.BannerId,
@@ -57,8 +57,8 @@ namespace Gym13.Application.Services
                 return Fail<BaseResponseModel>(message: "ასეთი ორდერით ბანერი უკვე არსებობს");
             var banner = new Banner
             {
-                Title = TextLocalization.Create(request.TitleKa, request.TitleEn),
-                Description = TextLocalization.Create(request.DescriptionKa, request.DescriptionEn),
+                Title = TextLocalization.Create(request.TitleKa, request.TitleEn).SerializedText,
+                Description = TextLocalization.Create(request.DescriptionKa, request.DescriptionEn).SerializedText,
                 Order = request.Order,
                 ImageUrl = request.ImageUrl
             };
@@ -74,8 +74,8 @@ namespace Gym13.Application.Services
                 return Fail<BaseResponseModel>(message: "ბანერი ვერ მოიძებნა");
             if (banner.Order != request.Order && _db.Banners.Any(b => b.Order == request.Order))
                 return Fail<BaseResponseModel>(message: "ასეთი ორდერით ბანერი უკვე არსებობს");
-            banner.Title = TextLocalization.Create(request.TitleKa, request.TitleEn);
-            banner.Description = TextLocalization.Create(request.DescriptionKa, request.DescriptionEn);
+            banner.Title = TextLocalization.Create(request.TitleKa, request.TitleEn).SerializedText;
+            banner.Description = TextLocalization.Create(request.DescriptionKa, request.DescriptionEn).SerializedText;
             banner.Order = request.Order;
             banner.ImageUrl = request.ImageUrl;
             return Success<BaseResponseModel>();

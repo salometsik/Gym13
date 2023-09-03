@@ -33,5 +33,6 @@ namespace Gym13.Domain.Data
         public DbSet<Trainer> Trainers { get; set; }
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Banner> Banners { get; set; }
+        public DbSet<InfoTab> InfoTabs { get; set; }
     }
 }

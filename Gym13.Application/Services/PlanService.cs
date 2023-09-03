@@ -144,7 +144,7 @@ namespace Gym13.Application.Services
         {
             var planService = new Domain.Models.PlanService
             {
-                Title = TextLocalization.Create(request.TitleKa, request.TitleEn)
+                Title = TextLocalization.Create(request.TitleKa, request.TitleEn).SerializedText
             };
             _db.PlanServices.Add(planService);
             await _db.SaveChangesAsync();
@@ -167,7 +167,7 @@ namespace Gym13.Application.Services
             var planService = await _db.PlanServices.FirstOrDefaultAsync(p => p.PlanServiceId == request.PlanServiceId);
             if (planService != null)
             {
-                planService.Title = TextLocalization.Create(request.TitleKa, request.TitleEn);
+                planService.Title = TextLocalization.Create(request.TitleKa, request.TitleEn).SerializedText;
                 await _db.SaveChangesAsync();
             }
         }
