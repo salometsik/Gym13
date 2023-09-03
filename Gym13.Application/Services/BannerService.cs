@@ -51,7 +51,7 @@ namespace Gym13.Application.Services
             return response;
         }
 
-        public async Task<BaseResponseModel> AddBanner(BannerModel request)
+        public async Task<BaseResponseModel> CreateBanner(BannerModel request)
         {
             if (_db.Banners.Any(b => b.Order == request.Order))
                 return Fail<BaseResponseModel>(message: "ასეთი ორდერით ბანერი უკვე არსებობს");
