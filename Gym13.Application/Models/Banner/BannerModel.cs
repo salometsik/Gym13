@@ -7,7 +7,7 @@
         public string TitleEn { get; set; }
         public string DescriptionKa { get; set; }
         public string DescriptionEn { get; set; }
-        public string? ImageUrl { get; set; }
-        public int? Order { get; set; }
+        public string ImageUrl { get; set; }
+        public int Order { get; set; }
     }
 }

@@ -104,6 +104,7 @@ services.AddScoped<ITrainerService, TrainerService>();
 services.AddScoped<IAccountService, AccountService>();
 services.AddTransient<ISmsSender, MessageSender>();
 services.AddTransient<IEmailSender, MessageSender>();
+services.AddTransient<IBannerService, BannerService>();
 
 services.AddCors();
 
