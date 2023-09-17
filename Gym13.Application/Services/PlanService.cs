@@ -19,7 +19,7 @@ namespace Gym13.Application.Services
         #region Plan
         public async Task<List<PlanModel>> GetPlans(PlanPeriodType? periodType)
         {
-            var plans = await _db.Plans.Where(x => x.IsActive
+            var plans = await _db.Plans.Include(p => p.PlanServices).Where(x => x.IsActive
                 && (periodType.HasValue || x.PeriodType == periodType)).ToListAsync();
 
             var resp = plans.Select(i => new PlanModel
@@ -30,7 +30,12 @@ namespace Gym13.Application.Services
                 PeriodNumber = i.PeriodNumber,
                 PeriodType = i.PeriodType,
                 HourFrom = i.HourFrom,
-                HourTo = i.HourTo
+                HourTo = i.HourTo,
+                PlanServices = i.PlanServices.Select(s => new PlanServicesItem
+                {
+                    Id = s.PlanServiceId,
+                    Title = new TextLocalization(s.Title)
+                }).ToList()
             }).ToList();
 
             return resp;
