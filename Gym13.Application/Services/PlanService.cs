@@ -85,17 +85,14 @@ namespace Gym13.Application.Services
             var plan = await _db.Plans.FirstOrDefaultAsync(x => x.PlanId == request.PlanId);
             if (plan != null)
             {
-                plan = new Plan
-                {
-                    Title = request.Title,
-                    Price = request.Price,
-                    PeriodNumber = request.PeriodNumber,
-                    PeriodType = request.PeriodType,
-                    HourFrom = request.HourFrom,
-                    HourTo = request.HourTo,
-                    UpdateDate = DateTime.UtcNow.AddHours(4),
-                    PlanServiceIds = string.Join(',', request.PlanServices.Select(i => i.Id))
-                };
+                plan.Title = request.Title;
+                plan.Price = request.Price;
+                plan.PeriodNumber = request.PeriodNumber;
+                plan.PeriodType = request.PeriodType;
+                plan.HourFrom = request.HourFrom;
+                plan.HourTo = request.HourTo;
+                plan.UpdateDate = DateTime.UtcNow.AddHours(4);
+                plan.PlanServiceIds = string.Join(',', request.PlanServices.Select(i => i.Id));
                 await _db.SaveChangesAsync();
             }
         }

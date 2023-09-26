@@ -19,6 +19,8 @@ IServiceCollection services = builder.Services;
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 services.AddDbContext<Gym13DbContext>(options => options.UseNpgsql(connectionString, x => x.MigrationsAssembly(migrationsAssembly)));
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
 services.AddControllers();
 
 services.AddIdentity<ApplicationUser, IdentityRole>(o =>
@@ -115,8 +117,6 @@ app.UseCors(builder =>
     builder.WithOrigins("http://localhost:3000")
     .AllowAnyMethod().AllowAnyHeader().AllowCredentials();
 });
-
-AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

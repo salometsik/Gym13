@@ -64,16 +64,13 @@ namespace Gym13.Application.Services
                 return Fail<BaseResponseModel>(message: "ტრენერი ვერ მოიძებნა");
             if (trainer.Order != request.Order && _db.Trainers.Any(t => t.Order == request.Order))
                 return Fail<BaseResponseModel>(message: "ასეთი ორდერით ტრენერი უკვე არსებობს");
-            trainer = new Trainer
-            {
-                Name = request.Name,
-                FacebookUrl = request.FacebookUrl,
-                InstagramUrl = request.InstagramUrl,
-                TwitterUrl = request.TwitterUrl,
-                ImageUrl = request.ImageUrl,
-                UpdateDate = DateTime.UtcNow.AddHours(4),
-                Description = TextLocalization.Create(request.DescriptionKa, request.DescriptionEn).SerializedText
-            };
+            trainer.Name = request.Name;
+            trainer.FacebookUrl = request.FacebookUrl;
+            trainer.InstagramUrl = request.InstagramUrl;
+            trainer.TwitterUrl = request.TwitterUrl;
+            trainer.ImageUrl = request.ImageUrl;
+            trainer.UpdateDate = DateTime.UtcNow.AddHours(4);
+            trainer.Description = TextLocalization.Create(request.DescriptionKa, request.DescriptionEn).SerializedText;
             await _db.SaveChangesAsync();
             return Success<BaseResponseModel>();
         }
@@ -112,7 +109,7 @@ namespace Gym13.Application.Services
         #endregion
         public async Task<List<TrainerModel>> GetTrainerList(int? pageSize)
         {
-            var trainers = await _db.Trainers.ToListAsync();
+            var trainers = await _db.Trainers.Where(t => t.IsActive).ToListAsync();
             if (pageSize.HasValue)
                 trainers = trainers.OrderBy(t => t.Order).Take(pageSize.Value).ToList();
             else
@@ -132,7 +129,7 @@ namespace Gym13.Application.Services
 
         public async Task<TrainerResponseModel> GetTrainerDetails(int id)
         {
-            var trainer = await _db.Trainers.FirstOrDefaultAsync(t => t.TrainerId == id);
+            var trainer = await _db.Trainers.FirstOrDefaultAsync(t => t.TrainerId == id && t.IsActive);
             if (trainer == null)
                 return Fail<TrainerResponseModel>(message: Gym13Resources.RecordNotFound);
             var response = new TrainerResponseModel

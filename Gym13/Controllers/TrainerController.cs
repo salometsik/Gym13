@@ -1,4 +1,5 @@
 ﻿using Gym13.Application.Interfaces;
+using Gym13.Application.Models;
 using Gym13.Application.Models.Trainer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +8,7 @@ namespace Gym13.Controllers
 {
     [Route("v1/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes = "Bearer")]
+    //[Authorize(AuthenticationSchemes = "Bearer")]
     public class TrainerController : ControllerBase
     {
         readonly ITrainerService _trainerService;
@@ -24,22 +25,22 @@ namespace Gym13.Controllers
         public async Task<TrainerResponseModel> GetTrainerDetails(int id) => await _trainerService.GetTrainerDetails(id);
         #region Manage
         [HttpGet]
-        public async Task<TrainerModel?> GetPlan(int id) => await _trainerService.GetTrainer(id);
+        public async Task<TrainerModel?> GetTrainer(int id) => await _trainerService.GetTrainer(id);
 
         [HttpPost]
-        public async Task AddPlan(TrainerModel plan) => await _trainerService.AddTrainer(plan);
+        public async Task<BaseResponseModel> AddTrainer(TrainerModel trainer) => await _trainerService.AddTrainer(trainer);
 
         [HttpPut]
-        public async Task UpdatePlan(TrainerModel request) => await _trainerService.UpdateTrainer(request);
+        public async Task<BaseResponseModel> UpdateTrainer(TrainerModel request) => await _trainerService.UpdateTrainer(request);
 
         [HttpPatch("deactivate")]
-        public async Task DeactivatePlan(int id) => await _trainerService.DeactivateTrainer(id);
+        public async Task<BaseResponseModel> DeactivateTrainer(int id) => await _trainerService.DeactivateTrainer(id);
 
         [HttpPatch("reactivate")]
-        public async Task ReactivatePlan(int id) => await _trainerService.ReactivateTrainer(id);
+        public async Task<BaseResponseModel> ReactivateTrainer(int id) => await _trainerService.ReactivateTrainer(id);
 
         [HttpDelete]
-        public async Task DeletePlan(int id) => await _trainerService.DeleteTrainer(id);
+        public async Task<BaseResponseModel> DeleteTrainer(int id) => await _trainerService.DeleteTrainer(id);
         #endregion
     }
 }

@@ -21,55 +21,52 @@ namespace Gym13.Application.Services
         {
             if (_db.InfoTabs.Any(i => i.Order == request.Order))
                 return Fail<BaseResponseModel>(message: "ასეთი ორდერით info tab უკვე არსებობს");
-            var intoTab = new InfoTab
+            var infoTab = new InfoTab
             {
                 Title = TextLocalization.Create(request.TitleKa, request.TitleEn).SerializedText,
                 Description = TextLocalization.Create(request.DescriptionKa, request.DescriptionEn).SerializedText,
                 Order = request.Order
             };
-            await _db.InfoTabs.AddAsync(intoTab);
+            await _db.InfoTabs.AddAsync(infoTab);
             await _db.SaveChangesAsync();
             return Success<BaseResponseModel>();
         }
 
         public async Task<InfoTabModel?> GetInfoTab(int id)
         {
-            var intoTab = await _db.InfoTabs.FirstOrDefaultAsync(x => x.InfoTabId == id);
-            if (intoTab == null)
+            var infoTab = await _db.InfoTabs.FirstOrDefaultAsync(x => x.InfoTabId == id);
+            if (infoTab == null)
                 return null;
             var model = new InfoTabModel
             {
-                InfoTabId = intoTab.InfoTabId,
-                TitleKa = new TextLocalization(intoTab.Title).KA,
-                TitleEn = new TextLocalization(intoTab.Title).EN,
-                DescriptionKa = new TextLocalization(intoTab.Description).KA,
-                DescriptionEn = new TextLocalization(intoTab.Description).EN
+                InfoTabId = infoTab.InfoTabId,
+                TitleKa = new TextLocalization(infoTab.Title).KA,
+                TitleEn = new TextLocalization(infoTab.Title).EN,
+                DescriptionKa = new TextLocalization(infoTab.Description).KA,
+                DescriptionEn = new TextLocalization(infoTab.Description).EN
             };
             return model;
         }
 
         public async Task<BaseResponseModel> UpdateInfoTab(InfoTabModel request)
         {
-            var intoTab = await _db.InfoTabs.FirstOrDefaultAsync(x => x.InfoTabId == request.InfoTabId);
-            if (intoTab == null)
+            var infoTab = await _db.InfoTabs.FirstOrDefaultAsync(x => x.InfoTabId == request.InfoTabId);
+            if (infoTab == null)
                 return Fail<BaseResponseModel>(message: "info tab ვერ მოიძებნა");
-            if (intoTab.Order != request.Order && _db.InfoTabs.Any(i => i.Order == request.Order))
+            if (infoTab.Order != request.Order && _db.InfoTabs.Any(i => i.Order == request.Order))
                 return Fail<BaseResponseModel>(message: "ასეთი ორდერით into tab უკვე არსებობს");
-            intoTab = new InfoTab
-            {
-                Title = TextLocalization.Create(request.TitleKa, request.TitleEn).SerializedText,
-                Description = TextLocalization.Create(request.DescriptionKa, request.DescriptionEn).SerializedText
-            };
+            infoTab.Title = TextLocalization.Create(request.TitleKa, request.TitleEn).SerializedText;
+            infoTab.Description = TextLocalization.Create(request.DescriptionKa, request.DescriptionEn).SerializedText;
             await _db.SaveChangesAsync();
             return Success<BaseResponseModel>();
         }
 
         public async Task<BaseResponseModel> DeleteInfoTab(int id)
         {
-            var intoTab = await _db.InfoTabs.FirstOrDefaultAsync(x => x.InfoTabId == id);
-            if (intoTab == null)
+            var infoTab = await _db.InfoTabs.FirstOrDefaultAsync(x => x.InfoTabId == id);
+            if (infoTab == null)
                 return Fail<BaseResponseModel>(message: "into tab ვერ მოიძებნა");
-            _db.InfoTabs.Remove(intoTab);
+            _db.InfoTabs.Remove(infoTab);
             await _db.SaveChangesAsync();
             return Success<BaseResponseModel>();
         }
