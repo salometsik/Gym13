@@ -55,6 +55,8 @@ namespace Gym13.Application.Services
                 var newUser = new ApplicationUser
                 {
                     UserName = request.Email,
+                    Email = request.Email,
+                    PhoneNumber = request.PhoneNumber,
                     FirstName = request.FirstName,
                     LastName = request.LastName,
                     Gender = request.Gender,
@@ -69,7 +71,7 @@ namespace Gym13.Application.Services
                 if (!result.Succeeded)
                     return Fail<RegistrationResponseModel>(message: Gym13Resources.BadRequest);
 
-                await SendCode(existingUser, "რეგისტრაციის დასრულება");
+                //await SendCode(newUser, "რეგისტრაციის დასრულება");
                 return Success(new RegistrationResponseModel { UserId = newUser.Id });
             }
         }
