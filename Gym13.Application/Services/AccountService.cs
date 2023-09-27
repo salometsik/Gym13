@@ -6,8 +6,12 @@ using Gym13.Common.Enums;
 using Gym13.Common.Resources;
 using Gym13.Domain.Data;
 using Gym13.Domain.Models;
+using IdentityModel.Client;
+using IdentityServer4;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using IdentityServer4.Models;
+using Gym13.Extensions;
 
 namespace Gym13.Application.Services
 {
@@ -17,13 +21,15 @@ namespace Gym13.Application.Services
         readonly UserManager<ApplicationUser> _userManager;
         readonly IEmailSender _emailSender;
         readonly ISmsSender _smsSender;
+        readonly IHttpClientWrapper _httpClientWrapper;
 
-        public AccountService(Gym13DbContext db, UserManager<ApplicationUser> userManager, IEmailSender emailSender, ISmsSender smsSender)
+        public AccountService(Gym13DbContext db, UserManager<ApplicationUser> userManager, IEmailSender emailSender, ISmsSender smsSender, IHttpClientWrapper httpClientWrapper)
         {
             _db = db;
             _userManager = userManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
+            _httpClientWrapper = httpClientWrapper;
         }
 
         public async Task<RegistrationResponseModel> CreateAccount(RegistrationRequestModel request)
@@ -70,6 +76,16 @@ namespace Gym13.Application.Services
                 var result = await _userManager.CreateAsync(newUser);
                 if (!result.Succeeded)
                     return Fail<RegistrationResponseModel>(message: Gym13Resources.BadRequest);
+
+                var response = await _httpClientWrapper.RequestPasswordTokenAsync(new PasswordTokenRequest
+                {
+                    Address = "https://localhost:7258/connect/token",
+                    ClientId = "Gym13Client",
+                    ClientSecret = "Gym13Secret",
+                    UserName = request.Email,
+                    Password = request.Password,
+                    Scope = "Gym13ToApi"
+                });
 
                 //await SendCode(newUser, "რეგისტრაციის დასრულება");
                 return Success(new RegistrationResponseModel { UserId = newUser.Id });

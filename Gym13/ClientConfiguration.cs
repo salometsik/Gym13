@@ -1,4 +1,5 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
 
 namespace Gym13
 {
@@ -19,6 +20,7 @@ namespace Gym13
             };
             return apiRess;
         }
+
         public static IEnumerable<ApiScope> GetApiScopes()
         {
             var apiRess = new ApiScope[] {
@@ -31,27 +33,31 @@ namespace Gym13
             return apiRess;
         }
 
-
         public static IEnumerable<Client> GetClients()
         {
-            var Gym13GrantTypes = new List<string>();
-            Gym13GrantTypes.AddRange(GrantTypes.ResourceOwnerPassword);
-            Gym13GrantTypes.AddRange(GrantTypes.ClientCredentials);
+            //var Gym13GrantTypes = new List<string>();
+            //Gym13GrantTypes.AddRange(GrantTypes.ResourceOwnerPassword);
+            //Gym13GrantTypes.AddRange(GrantTypes.ClientCredentials);
 
-            var apiGrantTypes = new List<string> { };
-            apiGrantTypes.AddRange(GrantTypes.ResourceOwnerPassword);
-            apiGrantTypes.AddRange(GrantTypes.ClientCredentials);
+            //var apiGrantTypes = new List<string> { };
+            //apiGrantTypes.AddRange(GrantTypes.ResourceOwnerPassword);
+            //apiGrantTypes.AddRange(GrantTypes.ClientCredentials);
 
             var clients = new List<Client>{
                 new Client
                 {
                     ClientId = "Gym13Client",
                     AllowOfflineAccess = true,
-                    AllowedGrantTypes = apiGrantTypes,
-                    ClientSecrets = new[] { new Secret("Gym13Secret".Sha256()) },
-                    AllowedScopes = new[] {"Gym13ToApi" },
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                    ClientSecrets = new[] { new Secret("Gym13Secret") },
+                    AllowedScopes = new[] { "Gym13ToApi", IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.OfflineAccess },
                     AllowAccessTokensViaBrowser = true,
-                    AccessTokenLifetime = 3600 * 24 * 365 * 10 //10 years
+                    AccessTokenLifetime = 3600 * 24 * 365 * 10, //10 years
+                    RefreshTokenExpiration = TokenExpiration.Sliding,
+                    SlidingRefreshTokenLifetime = 1200,
+                    RefreshTokenUsage = TokenUsage.OneTimeOnly,
+                    UpdateAccessTokenClaimsOnRefresh = true
                 }
             };
 
