@@ -45,7 +45,11 @@ namespace Gym13.Application.Services
                     existingUser = user;
             }
             else
+            {
                 existingUser = _userManager.Users.FirstOrDefault(u => u.PhoneNumber == request.PhoneNumber);
+                if (existingUser != null && !existingUser.PhoneNumberConfirmed)
+                    return Fail<RegistrationResponseModel>(message: Gym13Resources.UserExists);
+            }
             if (existingUser != null)
             {
                 if (existingUser.EmailConfirmed && existingUser.Status != ApplicationUserStatus.NotConfirmed)
