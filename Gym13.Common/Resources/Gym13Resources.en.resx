@@ -157,7 +157,7 @@
     <value>Unauthorized</value>
   </data>
   <data name="UserExists" xml:space="preserve">
-    <value>User exists</value>
+    <value>User already exists</value>
   </data>
   <data name="UserNotExists" xml:space="preserve">
     <value>User does not exist</value>

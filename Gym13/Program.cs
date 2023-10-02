@@ -24,6 +24,7 @@ services.AddDbContext<Gym13DbContext>(options => options.UseNpgsql(connectionStr
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
+services.AddFluentValidation();
 services.AddControllers();
 
 services.AddIdentity<ApplicationUser, IdentityRole>(o =>

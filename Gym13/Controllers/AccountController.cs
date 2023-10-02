@@ -1,7 +1,6 @@
 ﻿using Gym13.Application.Interfaces;
 using Gym13.Application.Models;
 using Gym13.Application.Models.Account;
-using Gym13.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;

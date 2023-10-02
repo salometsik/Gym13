@@ -35,9 +35,15 @@ namespace Gym13.Application.Services
         public async Task<RegistrationResponseModel> CreateAccount(RegistrationRequestModel request)
         {
             ApplicationUser? existingUser = null;
+            bool notConfirmed = false;
             var user = await _userManager.FindByEmailAsync(request.Email);
-            if (user != null && user.EmailConfirmed)
-                existingUser = user;
+            if (user != null)
+            {
+                if (!user.EmailConfirmed)
+                    notConfirmed = true;
+                else
+                    existingUser = user;
+            }
             else
                 existingUser = _userManager.Users.FirstOrDefault(u => u.PhoneNumber == request.PhoneNumber);
             if (existingUser != null)
@@ -52,12 +58,14 @@ namespace Gym13.Application.Services
                     if (!result.Succeeded)
                         return Fail<RegistrationResponseModel>();
 
-                    await SendCode(existingUser, "რეგისტრაციის დასრულება");
+                    //await SendCode(existingUser, "რეგისტრაციის დასრულება");
                     return Success(new RegistrationResponseModel { UserId = existingUser.Id });
                 }
             }
             else
             {
+                if (notConfirmed)
+                    return Fail<RegistrationResponseModel>(message: Gym13Resources.UserExists);
                 var newUser = new ApplicationUser
                 {
                     UserName = request.Email,
