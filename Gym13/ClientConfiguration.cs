@@ -49,7 +49,7 @@ namespace Gym13
                     ClientId = "Gym13Client",
                     AllowOfflineAccess = true,
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
-                    ClientSecrets = new[] { new Secret("Gym13Secret") },
+                    ClientSecrets = new[] { new Secret("Gym13Secret".Sha256()) },
                     AllowedScopes = new[] { "Gym13ToApi", IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.OfflineAccess },
                     AllowAccessTokensViaBrowser = true,

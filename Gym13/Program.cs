@@ -18,6 +18,7 @@ using FluentValidation.AspNetCore;
 using FluentValidation;
 using Microsoft.AspNetCore.Hosting;
 using Gym13.Application.Validators;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 var builder = WebApplication.CreateBuilder(args);
 var migrationsAssembly = "Gym13.Domain";
@@ -77,6 +78,8 @@ services.AddSwaggerGen(options =>
                             Array.Empty<string>()
                         }
                     });
+
+    options.CustomSchemaIds(type => type.FullName);
 });
 services.AddCustomLocalization();
 services.AddHttpContextAccessor();
@@ -102,7 +105,6 @@ sql => sql.MigrationsAssembly(typeof(Gym13DbContext).GetTypeInfo().Assembly.GetN
     options.EnableTokenCleanup = true;
     options.TokenCleanupInterval = 1200;
     options.TokenCleanupBatchSize = 500;
-
 })
 .AddAspNetIdentity<ApplicationUser>()
 .AddInMemoryApiResources(ClientConfiguration.GetApiResources())
@@ -143,15 +145,9 @@ services.AddAuthentication(options =>
 {
     options.ApiName = "Gym13Client";
     options.ApiSecret = "Gym13Secret";
-    options.Authority = "https://localhost";
+    options.Authority = "https://localhost:7258";
     options.RequireHttpsMetadata = false;
     options.JwtValidationClockSkew = TimeSpan.FromMinutes(1);
-}).AddJwtBearer("scheme", o =>
-{
-    // my API name as defined in Config.cs - new ApiResource... or in DB ApiResources table
-    o.Audience = "Gym13Api";
-    // URL of Auth server(API and Auth are separate projects/applications),
-    o.Authority = builder.Configuration.GetValue<string>("IdentityServerConfig:Authority");
 });
 services.AddTransient<IProfileService, ProfileService>();
 services.AddScoped<IPlanService, Gym13.Application.Services.PlanService>();
@@ -186,8 +182,9 @@ app.UseRequestLocalization();
 app.UseHttpsRedirection();
 
 app.UseRouting();
-//app.UseAuthentication();
-//app.UseAuthorization();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.UseEndpoints(endpoints =>
 {

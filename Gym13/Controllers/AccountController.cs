@@ -1,6 +1,7 @@
 ﻿using Gym13.Application.Interfaces;
 using Gym13.Application.Models;
 using Gym13.Application.Models.Account;
+using Gym13.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -9,7 +10,7 @@ namespace Gym13.Controllers
 {
     [Route("v1/[controller]")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = "Bearer")]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class AccountController : ControllerBase
     {
         readonly IAccountService _accountService;
@@ -25,6 +26,7 @@ namespace Gym13.Controllers
         public async Task<UserProfileModel> GetUser(string userId) => await _accountService.GetUser(userId);
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<RegistrationResponseModel> Register(RegistrationRequestModel request)
             => await _accountService.CreateAccount(request);
 
