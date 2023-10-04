@@ -14,6 +14,10 @@ using Gym13.Application.Services;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using FluentValidation.AspNetCore;
+using FluentValidation;
+using Microsoft.AspNetCore.Hosting;
+using Gym13.Application.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 var migrationsAssembly = "Gym13.Domain";
@@ -24,7 +28,9 @@ services.AddDbContext<Gym13DbContext>(options => options.UseNpgsql(connectionStr
 
 AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-services.AddFluentValidation();
+services.AddFluentValidationAutoValidation();
+services.AddFluentValidationClientsideAdapters();
+services.AddValidatorsFromAssemblies(new[] { Assembly.Load("Gym13.Application"), typeof(Program).Assembly });
 services.AddControllers();
 
 services.AddIdentity<ApplicationUser, IdentityRole>(o =>
