@@ -58,25 +58,25 @@ namespace Gym13.Controllers
 
         [HttpPatch("send-code-from-profile")]
         [UserAuthorize]
-        public async Task SendCodeFromProfile(string to) => await _accountService.SendCodeFromProfile(to, UserId);
+        public async Task<BaseResponseModel> SendCodeFromProfile(string to) => await _accountService.SendCodeFromProfile(to, UserId);
 
         [HttpPatch("send-validation-code")]
-        public async Task SendValidationCode(string to) => await _accountService.SendValidationCode(to);
+        public async Task<BaseResponseModel> SendValidationCode(string to) => await _accountService.SendValidationCode(to);
 
         [HttpPatch("reset-password")]
-        public async Task ResetPassword(ResetPasswordRequestModel request)
+        public async Task<BaseResponseModel> ResetPassword(ResetPasswordRequestModel request)
         {
             var model = new UpdatePasswordModel
             {
                 EmailOrPhone = request.EmailOrPhone,
                 Password = request.Password
             };
-            await _accountService.UpdatePassword(model);
+            return await _accountService.UpdatePassword(model);
         }
 
         [HttpPatch("change-password")]
         [UserAuthorize]
-        public async Task ChangePassword(ChangePasswordRequestModel request)
+        public async Task<BaseResponseModel> ChangePassword(ChangePasswordRequestModel request)
         {
             var model = new UpdatePasswordModel
             {
@@ -84,7 +84,7 @@ namespace Gym13.Controllers
                 Password = request.Password,
                 CurrentPassword = request.CurrentPassword
             };
-            await _accountService.UpdatePassword(model);
+            return await _accountService.UpdatePassword(model);
         }
 
     }

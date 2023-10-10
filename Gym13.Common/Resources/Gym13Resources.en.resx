@@ -142,7 +142,7 @@
     <value>Password must contain at least 6 characters</value>
   </data>
   <data name="PasswordsMustMatch" xml:space="preserve">
-    <value>პაროლები უნდა ემთხვეოდეს</value>
+    <value>Passwords must match</value>
   </data>
   <data name="PhoneAlreadyConfirmed" xml:space="preserve">
     <value>Phone number is already confirmed</value>
