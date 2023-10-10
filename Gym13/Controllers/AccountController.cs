@@ -26,7 +26,6 @@ namespace Gym13.Controllers
         public async Task<UserProfileModel> GetUser() => await _accountService.GetUser(UserId);
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<RegistrationResponseModel> Register(RegistrationRequestModel request)
             => await _accountService.CreateAccount(request);
 
