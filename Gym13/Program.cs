@@ -60,24 +60,25 @@ services.Configure<SmsSenderOptions>(builder.Configuration.GetSection(nameof(Sms
 //services.AddSwaggerDocumentation(builder.Configuration);
 services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(o =>
+{
+    // my API name as defined in Config.cs - new ApiResource... or in DB ApiResources table
+    o.Audience = "Gym13Api";
+    // URL of Auth server(API and Auth are separate projects/applications),
+    o.Authority = builder.Configuration.GetValue<string>("IdentityServerOptions:Authority");
+    o.RequireHttpsMetadata = true;
+    o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
-        Name = "Authorization",
-        Type = SecuritySchemeType.Http,
-        Scheme = "Bearer",
-        In = ParameterLocation.Header
-    });
-
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                    {
-                        {
-                            new OpenApiSecurityScheme
-                            {
-                                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
-                            },
-                            Array.Empty<string>()
-                        }
-                    });
+        ValidateAudience = true,
+        // Scopes supported by API as defined in Config.cs - new ApiResource... or in DB ApiScopes table
+        ValidAudiences = new List<string>() {
+                        "Gym13Api"
+            },
+        ValidateIssuer = true
+    };
+});
 
     options.CustomSchemaIds(type => type.FullName);
 });
@@ -101,10 +102,8 @@ builder.UseNpgsql(connectionString,
 sql => sql.MigrationsAssembly(typeof(Gym13DbContext).GetTypeInfo().Assembly.GetName().Name)))
 .AddOperationalStore(options =>
 {
-    options.ConfigureDbContext = builder => builder.UseNpgsql(connectionString, sql => sql.MigrationsAssembly(typeof(Gym13DbContext).GetTypeInfo().Assembly.GetName().Name));
-    options.EnableTokenCleanup = true;
-    options.TokenCleanupInterval = 1200;
-    options.TokenCleanupBatchSize = 500;
+    opts.Events.RaiseSuccessEvents = true;
+    opts.IssuerUri = builder.Configuration.GetValue<string>($"IdentityServerOptions:Authority");
 })
 .AddAspNetIdentity<ApplicationUser>()
 .AddInMemoryApiResources(ClientConfiguration.GetApiResources())

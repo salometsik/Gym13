@@ -22,8 +22,8 @@ namespace Gym13.Controllers
         }
 
         [HttpGet]
-        //[UserAuthorize]
-        public async Task<UserProfileModel> GetUser(string userId) => await _accountService.GetUser(userId);
+        [UserAuthorize]
+        public async Task<UserProfileModel> GetUser() => await _accountService.GetUser(UserId);
 
         [HttpPost]
         [AllowAnonymous]
@@ -31,7 +31,7 @@ namespace Gym13.Controllers
             => await _accountService.CreateAccount(request);
 
         [HttpPut]
-        //[UserAuthorize]
+        [UserAuthorize]
         public async Task<BaseResponseModel> UpdateUser(UpdateUserRequestModel request)
         {
             var model = new UpdateUserModel
@@ -52,12 +52,12 @@ namespace Gym13.Controllers
             => await _accountService.ConfirmValidationCode(null, request.EmailOrPhone, request.Code);
 
         [HttpPut("confirm-code")]
-        //[UserAuthorize]
+        [UserAuthorize]
         public async Task<BaseResponseModel> ConfirmCode(ConfirmEmailOrPhoneRequestModel request)
             => await _accountService.ConfirmValidationCode(UserId, request.EmailOrPhone, request.Code);
 
         [HttpPatch("send-code-from-profile")]
-        //[UserAuthorize]
+        [UserAuthorize]
         public async Task SendCodeFromProfile(string to) => await _accountService.SendCodeFromProfile(to, UserId);
 
         [HttpPatch("send-validation-code")]
@@ -75,7 +75,7 @@ namespace Gym13.Controllers
         }
 
         [HttpPatch("change-password")]
-        //[UserAuthorize]
+        [UserAuthorize]
         public async Task ChangePassword(ChangePasswordRequestModel request)
         {
             var model = new UpdatePasswordModel

@@ -35,24 +35,20 @@ namespace Gym13
 
         public static IEnumerable<Client> GetClients()
         {
-            //var Gym13GrantTypes = new List<string>();
-            //Gym13GrantTypes.AddRange(GrantTypes.ResourceOwnerPassword);
-            //Gym13GrantTypes.AddRange(GrantTypes.ClientCredentials);
-
-            //var apiGrantTypes = new List<string> { };
-            //apiGrantTypes.AddRange(GrantTypes.ResourceOwnerPassword);
-            //apiGrantTypes.AddRange(GrantTypes.ClientCredentials);
+            var apiGrantTypes = new List<string> { };
+            apiGrantTypes.AddRange(GrantTypes.ResourceOwnerPassword);
+            apiGrantTypes.AddRange(GrantTypes.ClientCredentials);
 
             var clients = new List<Client>{
                 new Client
                 {
                     ClientId = "Gym13Client",
+                    AllowAccessTokensViaBrowser = true,
                     AllowOfflineAccess = true,
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                     ClientSecrets = new[] { new Secret("Gym13Secret".Sha256()) },
                     AllowedScopes = new[] { "Gym13ToApi", IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.OfflineAccess },
-                    AllowAccessTokensViaBrowser = true,
                     AccessTokenLifetime = 3600 * 24 * 365 * 10, //10 years
                     RefreshTokenExpiration = TokenExpiration.Sliding,
                     SlidingRefreshTokenLifetime = 1200,
