@@ -45,16 +45,15 @@ services.AddAuthentication(opt =>
 }).AddJwtBearer(o =>
 {
     // my API name as defined in Config.cs - new ApiResource... or in DB ApiResources table
-    o.Audience = "user_registration";
+    o.Audience = "Gym13Api";
     // URL of Auth server(API and Auth are separate projects/applications),
-    o.Authority = builder.Configuration.GetValue<string>("IdentityServerConfig:Authority");
+    o.Authority = builder.Configuration.GetValue<string>("IdentityServerOptions:Authority");
     o.RequireHttpsMetadata = true;
     o.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
         ValidateAudience = true,
         // Scopes supported by API as defined in Config.cs - new ApiResource... or in DB ApiScopes table
         ValidAudiences = new List<string>() {
-                        "user_registration",
                         "Gym13Api"
             },
         ValidateIssuer = true
@@ -78,7 +77,7 @@ cert = new X509Certificate2(path, "gym13", X509KeyStorageFlags.MachineKeySet);
 services.AddIdentityServer(opts =>
 {
     opts.Events.RaiseSuccessEvents = true;
-    opts.IssuerUri = builder.Configuration.GetValue<string>($"IdentityServerConfig:Authority");
+    opts.IssuerUri = builder.Configuration.GetValue<string>($"IdentityServerOptions:Authority");
 })
     .AddSigningCredential(cert)
     .AddAspNetIdentity<ApplicationUser>()
