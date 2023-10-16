@@ -1,11 +1,11 @@
 ﻿using Gym13.Common.Enums;
+using Gym13.Domain.Models.Base;
 
 namespace Gym13.Domain.Models
 {
-    public class Plan
+    public class Plan : BaseEntity
     {
         public int PlanId { get; set; }
-        public DateTime CreateDate { get; set; } = DateTime.UtcNow.AddHours(4);
         public DateTime? UpdateDate { get; set; }
         public string Title { get; set; }
         public decimal Price { get; set; }

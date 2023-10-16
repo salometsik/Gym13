@@ -1,6 +1,8 @@
-﻿namespace Gym13.Domain.Models
+﻿using Gym13.Domain.Models.Base;
+
+namespace Gym13.Domain.Models
 {
-    public class InfoTab
+    public class InfoTab : BaseEntity
     {
         public int InfoTabId { get; set; }
         public int Order { get; set; }

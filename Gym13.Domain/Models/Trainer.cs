@@ -1,9 +1,10 @@
-﻿namespace Gym13.Domain.Models
+﻿using Gym13.Domain.Models.Base;
+
+namespace Gym13.Domain.Models
 {
-    public class Trainer
+    public class Trainer : BaseEntity
     {
         public int TrainerId { get; set; }
-        public DateTime CreateDate { get; set; } = DateTime.UtcNow.AddHours(4);
         public DateTime? UpdateDate { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

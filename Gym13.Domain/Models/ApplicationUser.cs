@@ -10,7 +10,7 @@ namespace Gym13.Domain.Models
         public DateTime? BirthDate { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string? PersonalNumber { get; set; }
+        public string IdentificationNumber { get; set; }
         public ApplicationUserStatus Status { get; set; }
         public string? PhonePrefix { get; set; }
         public Gender? Gender { get; set; }

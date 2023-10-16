@@ -1,6 +1,8 @@
-﻿namespace Gym13.Domain.Models
+﻿using Gym13.Domain.Models.Base;
+
+namespace Gym13.Domain.Models
 {
-    public class Banner
+    public class Banner : BaseEntity
     {
         public int BannerId { get; set; }
         public string Title { get; set; }

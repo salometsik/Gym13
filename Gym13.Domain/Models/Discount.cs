@@ -1,8 +1,9 @@
 ﻿using Gym13.Common.Enums;
+using Gym13.Domain.Models.Base;
 
 namespace Gym13.Domain.Models
 {
-    public class Discount
+    public class Discount : BaseEntity
     {
         public int DiscountId { get; set; }
         public string Title { get; set; }
@@ -11,6 +12,5 @@ namespace Gym13.Domain.Models
         public DiscountType Type { get; set; }
         public decimal Amount { get; set; }
         public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
     }
 }

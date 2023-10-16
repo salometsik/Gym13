@@ -79,6 +79,7 @@ namespace Gym13.Application.Services
                     LastName = request.LastName,
                     Gender = request.Gender,
                     BirthDate = request.BirthDate,
+                    IdentificationNumber = request.IdentificationNumber,
                     Status = ApplicationUserStatus.NotConfirmed
                 };
 
@@ -245,6 +246,7 @@ namespace Gym13.Application.Services
             {
                 UserId = user.Id,
                 PhoneNumber = user.PhoneNumber,
+                IdentificationNumber = user.IdentificationNumber,
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
@@ -259,8 +261,10 @@ namespace Gym13.Application.Services
             var user = await _userManager.FindByIdAsync(model.UserId);
             if (user == null)
                 return Fail<BaseResponseModel>(message: Gym13Resources.UserNotExists);
+            await InsertUserEntityHistory(user, model);
             user.Email = model.Email;
             user.PhoneNumber = model.PhoneNumber;
+            user.IdentificationNumber = model.IdentificationNumber;
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.Gender = model.Gender;
@@ -298,6 +302,78 @@ namespace Gym13.Application.Services
                 user.ValidationCode = null;
                 user.ValidationCodeDateCreated = null;
                 return true;
+            }
+        }
+        async Task InsertUserEntityHistory(ApplicationUser user, UpdateUserModel request)
+        {
+            var histories = new List<EntityHistory>();
+            if (user.Email != request.Email)
+                histories.Add(new EntityHistory
+                {
+                    ActionType = EntityActionType.Updated,
+                    Table = "Users",
+                    Column = nameof(user.Email),
+                    OldValue = user.Email,
+                    NewValue = request.Email
+                });
+            if (user.PhoneNumber != request.PhoneNumber)
+                histories.Add(new EntityHistory
+                {
+                    ActionType = EntityActionType.Updated,
+                    Table = "Users",
+                    Column = nameof(user.PhoneNumber),
+                    OldValue = user.PhoneNumber,
+                    NewValue = request.PhoneNumber
+                });
+            if (user.IdentificationNumber != request.IdentificationNumber)
+                histories.Add(new EntityHistory
+                {
+                    ActionType = EntityActionType.Updated,
+                    Table = "Users",
+                    Column = nameof(user.IdentificationNumber),
+                    OldValue = user.IdentificationNumber,
+                    NewValue = request.IdentificationNumber
+                });
+            if (user.FirstName != request.FirstName)
+                histories.Add(new EntityHistory
+                {
+                    ActionType = EntityActionType.Updated,
+                    Table = "Users",
+                    Column = nameof(user.FirstName),
+                    OldValue = user.FirstName,
+                    NewValue = request.FirstName
+                });
+            if (user.LastName != request.LastName)
+                histories.Add(new EntityHistory
+                {
+                    ActionType = EntityActionType.Updated,
+                    Table = "Users",
+                    Column = nameof(user.LastName),
+                    OldValue = user.LastName,
+                    NewValue = request.LastName
+                });
+            if (user.Gender != request.Gender)
+                histories.Add(new EntityHistory
+                {
+                    ActionType = EntityActionType.Updated,
+                    Table = "Users",
+                    Column = nameof(user.Gender),
+                    OldValue = user.Gender.HasValue ? user.Gender.ToString() : null,
+                    NewValue = request.Gender.HasValue ? request.Gender.ToString() : null
+                });
+            if (user.BirthDate != request.BirthDate)
+                histories.Add(new EntityHistory
+                {
+                    ActionType = EntityActionType.Updated,
+                    Table = "Users",
+                    Column = nameof(user.BirthDate),
+                    OldValue = user.BirthDate.HasValue ? user.BirthDate.ToString() : null,
+                    NewValue = request.BirthDate.HasValue ? request.BirthDate.ToString() : null
+                });
+            if (histories.Count > 0)
+            {
+                _db.EntityHistories.AddRange(histories);
+                await _db.SaveChangesAsync();
             }
         }
         #endregion
