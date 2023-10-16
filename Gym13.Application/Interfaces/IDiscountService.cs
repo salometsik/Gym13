@@ -10,5 +10,6 @@ namespace Gym13.Application.Interfaces
         Task<BaseResponseModel> CreateDiscount(DiscountModel request);
         Task<BaseResponseModel> UpdateDiscount(DiscountModel request);
         Task<BaseResponseModel> DeleteDiscount(int id);
+        Task<BaseResponseModel> ChangeDiscountActiveStatus(int id);
     }
 }

@@ -19,7 +19,7 @@ namespace Gym13.Application.Services
         #region Manage
         public async Task<List<DiscountModel>> GetDiscountList()
         {
-            var discounts = _db.Discounts.OrderByDescending(b => b.DiscountId).ToList();
+            var discounts = _db.Discounts.Where(d => !d.IsDeleted).OrderByDescending(b => b.DiscountId).ToList();
             var resp = discounts.Select(i => new DiscountModel
             {
                 DiscountId = i.DiscountId,
@@ -35,7 +35,7 @@ namespace Gym13.Application.Services
 
         public async Task<DiscountModel?> GetDiscount(int id)
         {
-            var discount = await _db.Discounts.FirstOrDefaultAsync(b => b.DiscountId == id);
+            var discount = await _db.Discounts.FirstOrDefaultAsync(d => d.DiscountId == id && !d.IsDeleted);
             if (discount == null)
                 return null;
             var response = new DiscountModel
@@ -69,7 +69,7 @@ namespace Gym13.Application.Services
 
         public async Task<BaseResponseModel> UpdateDiscount(DiscountModel request)
         {
-            var discount = await _db.Discounts.FirstOrDefaultAsync(b => b.DiscountId == request.DiscountId);
+            var discount = await _db.Discounts.FirstOrDefaultAsync(d => d.DiscountId == request.DiscountId && !d.IsDeleted);
             if (discount == null)
                 return Fail<BaseResponseModel>(message: "ფასდაკლება ვერ მოიძებნა");
             discount.Title = request.Title;
@@ -81,14 +81,24 @@ namespace Gym13.Application.Services
             return Success<BaseResponseModel>();
         }
 
+        public async Task<BaseResponseModel> ChangeDiscountActiveStatus(int id)
+        {
+            var discount = await _db.Discounts.FirstOrDefaultAsync(d => d.DiscountId == id && !d.IsDeleted);
+            if (discount == null)
+                return Fail<BaseResponseModel>(message: "ფასდაკლება ვერ მოიძებნა");
+            discount.IsActive = !discount.IsActive;
+            await _db.SaveChangesAsync();
+            return Success<BaseResponseModel>();
+        }
+
         public async Task<BaseResponseModel> DeleteDiscount(int id)
         {
-            var discount = await _db.Discounts.FirstOrDefaultAsync(b => b.DiscountId == id);
+            var discount = await _db.Discounts.FirstOrDefaultAsync(d => d.DiscountId == id && !d.IsDeleted);
             if (discount == null)
                 return Fail<BaseResponseModel>(message: "ფასდაკლება ვერ მოიძებნა");
             var discountedPlans = _db.Plans.Where(p => p.DiscountId == id).ToList();
             discountedPlans.ForEach(p => { p.DiscountId = null; });
-            _db.Discounts.Remove(discount);
+            discount.IsDeleted = true;
             await _db.SaveChangesAsync();
             return Success<BaseResponseModel>();
         }
