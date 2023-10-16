@@ -16,5 +16,7 @@ namespace Gym13.Domain.Models
         public bool IsActive { get; set; }
         public string PlanServiceIds { get; set; }
         public ICollection<PlanService> PlanServices { get; set; }
+        public Discount Discount { get; set; }
+        public int? DiscountId { get; set; }
     }
 }

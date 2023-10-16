@@ -19,14 +19,14 @@ namespace Gym13.Application.Services
         #region Plan
         public async Task<List<PlanModel>> GetPlans(PlanPeriodType? periodType)
         {
-            var plans = await _db.Plans.Include(p => p.PlanServices).Where(x => x.IsActive
-                && (periodType.HasValue || x.PeriodType == periodType)).ToListAsync();
+            var plans = await _db.Plans.Include(p => p.PlanServices).Include(p => p.Discount)
+                .Where(x => x.IsActive && (periodType.HasValue || x.PeriodType == periodType)).ToListAsync();
 
             var resp = plans.Select(i => new PlanModel
             {
                 PlanId = i.PlanId,
                 Title = i.Title,
-                Price = i.Price,
+                Price = GetPlanDiscountedAmount(i.Price, i.Discount),
                 PeriodNumber = i.PeriodNumber,
                 PeriodType = i.PeriodType,
                 HourFrom = i.HourFrom,
@@ -183,7 +183,17 @@ namespace Gym13.Application.Services
                 await _db.SaveChangesAsync();
             }
         }
-
         #endregion
+        public static decimal GetPlanDiscountedAmount(decimal price, Discount discount)
+        {
+            var now = DateTime.UtcNow.AddHours(4);
+            if (discount != null && (discount.IsActive || (now >= discount.StartDate && now <= discount.EndDate)))
+                return discount.Type switch
+                {
+                    DiscountType.Amount => price - discount.Amount,
+                    DiscountType.Percent => Math.Round(price - price * discount.Amount / 100, 2)
+                };
+            return price;
+        }
     }
 }
