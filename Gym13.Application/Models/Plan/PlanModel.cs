@@ -7,6 +7,7 @@ namespace Gym13.Application.Models.Plan
         public int? PlanId { get; set; }
         public string Title { get; set; }
         public decimal Price { get; set; }
+        public decimal? OriginalPrice { get; set; }
         public int PeriodNumber { get; set; }
         public int? HourFrom { get; set; }
         public int? HourTo { get; set; }

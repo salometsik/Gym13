@@ -17,15 +17,17 @@ namespace Gym13.Application.Services
         }
 
         #region Plan
-        public async Task<List<PlanModel>> GetPlans(PlanPeriodType? periodType)
+        public async Task<List<PlanModel>> GetPlans(PlanPeriodType? periodType, int? discountId)
         {
             var plans = await _db.Plans.Include(p => p.PlanServices).Include(p => p.Discount)
-                .Where(x => x.IsActive && (periodType.HasValue || x.PeriodType == periodType)).ToListAsync();
+                .Where(x => x.IsActive && (!periodType.HasValue || x.PeriodType == periodType)
+                && (!discountId.HasValue || x.DiscountId == discountId)).ToListAsync();
 
             var resp = plans.Select(i => new PlanModel
             {
                 PlanId = i.PlanId,
                 Title = i.Title,
+                OriginalPrice = i.DiscountId.HasValue ? i.Price : null,
                 Price = GetPlanDiscountedAmount(i.Price, i.Discount),
                 PeriodNumber = i.PeriodNumber,
                 PeriodType = i.PeriodType,
@@ -59,14 +61,15 @@ namespace Gym13.Application.Services
 
         public async Task<PlanModel?> GetPlan(int id)
         {
-            var plan = await _db.Plans.Include(p => p.PlanServices).FirstOrDefaultAsync(x => x.PlanId == id);
+            var plan = await _db.Plans.Include(p => p.PlanServices).Include(p => p.Discount).FirstOrDefaultAsync(x => x.PlanId == id);
             if (plan == null)
                 return null;
             var planModel = new PlanModel
             {
                 PlanId = plan.PlanId,
                 Title = plan.Title,
-                Price = plan.Price,
+                OriginalPrice = plan.DiscountId.HasValue ? plan.Price : null,
+                Price = GetPlanDiscountedAmount(plan.Price, plan.Discount),
                 PeriodNumber = plan.PeriodNumber,
                 PeriodType = plan.PeriodType,
                 HourFrom = plan.HourFrom,

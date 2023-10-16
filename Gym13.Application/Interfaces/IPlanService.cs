@@ -6,7 +6,7 @@ namespace Gym13.Application.Interfaces
     public interface IPlanService
     {
         #region Plan
-        Task<List<PlanModel>> GetPlans(PlanPeriodType? periodType);
+        Task<List<PlanModel>> GetPlans(PlanPeriodType? periodType, int? discountId);
         Task AddPlan(PlanModel request);
         Task<PlanModel?> GetPlan(int id);
         Task UpdatePlan(PlanModel request);

@@ -86,6 +86,8 @@ namespace Gym13.Application.Services
             var discount = await _db.Discounts.FirstOrDefaultAsync(b => b.DiscountId == id);
             if (discount == null)
                 return Fail<BaseResponseModel>(message: "ფასდაკლება ვერ მოიძებნა");
+            var discountedPlans = _db.Plans.Where(p => p.DiscountId == id).ToList();
+            discountedPlans.ForEach(p => { p.DiscountId = null; });
             _db.Discounts.Remove(discount);
             await _db.SaveChangesAsync();
             return Success<BaseResponseModel>();

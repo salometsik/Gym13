@@ -19,8 +19,8 @@ namespace Gym13.Controllers
         }
 
         [HttpGet("list")]
-        public async Task<List<PlanModel>> GetPlans(PlanPeriodType? periodType)
-            => await _planService.GetPlans(periodType);
+        public async Task<List<PlanModel>> GetPlans(PlanPeriodType? periodType, int? discountId)
+            => await _planService.GetPlans(periodType, discountId);
 
         [HttpGet]
         public async Task<PlanModel?> GetPlan(int id) => await _planService.GetPlan(id);
