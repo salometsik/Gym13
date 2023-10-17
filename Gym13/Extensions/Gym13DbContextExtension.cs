@@ -8,7 +8,7 @@ namespace Gym13.Extensions
     {
         public Gym13DbContext CreateDbContext(string[] args)
         {
-            var connectionString = "User ID=postgres;Password=Gym13-secret;Host=gym13-db.cektfzc1tnqp.eu-central-1.rds.amazonaws.com;Port=5432;Database=postgres;";
+            var connectionString = "User ID=doadmin;Password=AVNS_9bS5Alo9CWuLc_OJ7Yf;Host=gym13-db-do-user-14832054-0.c.db.ondigitalocean.com;Port=25060;Database=defaultdb;";
 
             var optionsBuilder = new DbContextOptionsBuilder<Gym13DbContext>();
             optionsBuilder.UseNpgsql(connectionString);
