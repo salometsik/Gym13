@@ -19,5 +19,4 @@ jobs:
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
     - name: yle
       run: |
-        ssh root@159.65.124.212
         cd ~/code/Gym13
