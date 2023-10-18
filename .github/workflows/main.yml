@@ -27,4 +27,10 @@ jobs:
           SSH_HOST: 159.65.124.212
 
       - name: Stop the server
-        run: 'ls -a'
+        run: 'cd ~/code/Gym13'
+        
+      - name: Stop the server1
+        run: 'git fetch origin'
+        
+      - name: Stop the server2
+        run: 'cd pull origin/master'
