@@ -19,4 +19,7 @@ jobs:
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
     - name: yle
       run: |
-        echo $PATH
+        ssh staging "cd ~/code/Gym13"
+    - name: h
+      run: |
+       ssh staging "ls -a"
