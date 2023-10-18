@@ -27,4 +27,4 @@ jobs:
           SSH_HOST: 159.65.124.212
 
       - name: Stop the server
-        run: ssh staging 'ls -a'
+        run: 'ls -a'
