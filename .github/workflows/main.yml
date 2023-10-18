@@ -1,0 +1,23 @@
+name: Build & Deploy
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy .Net app
+        uses: appleboy/ssh-action@v0.1.2
+        with:
+          host:  159.65.124.212 # IP address of the server you wish to ssh into
+          key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDEjia2vbmhXG9Sdpl8Mqfl+pLtlCdenycK7YA2ibaYFH3YMRrUrUxU535RpSwsQW66/q+z6V4yXY7upRUdi40MR+vXVI+Eb8qLDZn9dwnWJwEmZ03wHJHbcTG2lQUGWjK2trPxMfLNgF8i5+C87RGHMwiZ4OzzcdOPPQZOBFSmoN/ovi/5jhsqe1zKzO159AioWTIYAIelp8X73WquE1UDLnhEBYta0vJtmrUDZ88AIOMLG8DA42QjoZhKAnmJLhuIHOCzyo/iG6OB9RWS9HzCAbmhfdJaYW8ckh6i0vtBH59fHeDT59pEhP0Ko5I+29+NxbHuhqnxCF0b+EcQBirSIJGyeKh3sklNS34k1EnzxaHCP1mO9pLar/cnNs1d2x7XyHbH99p0TEBQ4gugkRBNlG09XP73AoFrdkMbKT8I9VX42lf/MGTNltKfMeRsWAySs+bETKa2i+CDejMXNpPSXE/qo6e5fdSOp9HI4FL7QXiztbketa8KjC6wz/K4qZc= user@DESKTOP-I7HIRLI
+ # Private or public key of the server
+          username: root # User of the server you want to ssh into
+     
+          script: |
+            cd code
+            cd Gym13
+            git fetch origin
+            git pull origin
+            echo 'Deployment successful to digital ocean' 
