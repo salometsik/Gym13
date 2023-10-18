@@ -27,7 +27,7 @@ jobs:
           SSH_HOST: 159.65.124.212
 
       - name: Stop the server
-        run: 'cd ~/code/Gym13'
+        run: 'cd /root/code/Gym13'
         
       - name: Stop the server1
         run: 'git fetch origin'
