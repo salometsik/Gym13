@@ -26,11 +26,14 @@ jobs:
           SSH_KEY: ${{ secrets.PRIVATE_KEY }}
           SSH_HOST: 159.65.124.212
 
+      - name: Stop the server0
+        run: 'su'
+        
       - name: Stop the server
-        run: 'sudo cd /root/code/Gym13'
+        run: 'cd /root/code/Gym13'
         
       - name: Stop the server1
-        run: 'sudo git fetch origin'
+        run: 'git fetch origin'
         
       - name: Stop the server2
-        run: 'sudo cd pull origin/master'
+        run: 'git pull origin/master'
