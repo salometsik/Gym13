@@ -11,8 +11,46 @@ jobs:
         uses: appleboy/ssh-action@v0.1.2
         with:
           host:  159.65.124.212 # IP address of the server you wish to ssh into
-          key: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDEjia2vbmhXG9Sdpl8Mqfl+pLtlCdenycK7YA2ibaYFH3YMRrUrUxU535RpSwsQW66/q+z6V4yXY7upRUdi40MR+vXVI+Eb8qLDZn9dwnWJwEmZ03wHJHbcTG2lQUGWjK2trPxMfLNgF8i5+C87RGHMwiZ4OzzcdOPPQZOBFSmoN/ovi/5jhsqe1zKzO159AioWTIYAIelp8X73WquE1UDLnhEBYta0vJtmrUDZ88AIOMLG8DA42QjoZhKAnmJLhuIHOCzyo/iG6OB9RWS9HzCAbmhfdJaYW8ckh6i0vtBH59fHeDT59pEhP0Ko5I+29+NxbHuhqnxCF0b+EcQBirSIJGyeKh3sklNS34k1EnzxaHCP1mO9pLar/cnNs1d2x7XyHbH99p0TEBQ4gugkRBNlG09XP73AoFrdkMbKT8I9VX42lf/MGTNltKfMeRsWAySs+bETKa2i+CDejMXNpPSXE/qo6e5fdSOp9HI4FL7QXiztbketa8KjC6wz/K4qZc= user@DESKTOP-I7HIRLI
- # Private or public key of the server
+          key: -----BEGIN OPENSSH PRIVATE KEY-----
+                b3BlbnNzaC1rZXktdjEAAAAACmFlczI1Ni1jdHIAAAAGYmNyeXB0AAAAGAAAABDMn2iV/q
+                UgHziB/P0EC576AAAAEAAAAAEAAAGXAAAAB3NzaC1yc2EAAAADAQABAAABgQDEjia2vbmh
+                XG9Sdpl8Mqfl+pLtlCdenycK7YA2ibaYFH3YMRrUrUxU535RpSwsQW66/q+z6V4yXY7upR
+                Udi40MR+vXVI+Eb8qLDZn9dwnWJwEmZ03wHJHbcTG2lQUGWjK2trPxMfLNgF8i5+C87RGH
+                MwiZ4OzzcdOPPQZOBFSmoN/ovi/5jhsqe1zKzO159AioWTIYAIelp8X73WquE1UDLnhEBY
+                ta0vJtmrUDZ88AIOMLG8DA42QjoZhKAnmJLhuIHOCzyo/iG6OB9RWS9HzCAbmhfdJaYW8c
+                kh6i0vtBH59fHeDT59pEhP0Ko5I+29+NxbHuhqnxCF0b+EcQBirSIJGyeKh3sklNS34k1E
+                nzxaHCP1mO9pLar/cnNs1d2x7XyHbH99p0TEBQ4gugkRBNlG09XP73AoFrdkMbKT8I9VX4
+                2lf/MGTNltKfMeRsWAySs+bETKa2i+CDejMXNpPSXE/qo6e5fdSOp9HI4FL7QXiztbketa
+                8KjC6wz/K4qZcAAAWQBjOLavN7dqtjsLhFFXHJrDtY7cHbN8yzuKqdSNBIULzVBvemSR2G
+                AT7ukq17QFmDwrL1Uu6WIOXb0VpcMZbh0uaec5BA4oWTBXN2QWoPH6z9h6xmazAp7qOr41
+                xAgfHeMO9gswl8GLJNKxM0eDw8Vh28QL2jGXQ28Q1Uo1nxWwzNPYAcQxuiJxSO4qX8IJ5G
+                yYL+IbyAXAAjlzsZSrturchBuNFL2kqg7Iak8HJtxpMX5seUnpbej3mHcISgCD7HNvshmt
+                ld01FWwIWoZWkUq4Ny4EquLmXHzfnwcglf7Fzy8SMCXVAh7NY3558womJSZqXDPNstkJgC
+                rJafG9sITaIqqR8cbFnjFH4LiOqf6rn4+gODEiA+q8s1pGlTcSPnnJaJGrTKrfEsT/E5tp
+                DL80/irK2/fMVNaATv6EZuJLjMrhwxjIIlEPD9FMPZXXy0P5w7RfADndTCoR+q9sqf/X16
+                NIBfZBEAPJER4K6BviMcxb76KVKSA54NUBR1ujZUKffoCwl/hevZsgGjOVvDPphaFhBpCr
+                fkjVPpwYm8zRX/0BvusS2GfnrFJGjTsqTa8L5TrRnCT7/XjkJ01gFFTTzCJza10zCCmObA
+                3E01k0NG68yTEdNJnS1KGB8l65te4cuzKHrNfBOScTtiW3VQh2wt78HjrHO92ZuP1RaoQu
+                U9gyzqTGmJWBRf/N03wRpgycZXEDe3zQvr/6KhjChVT2XHP9CJkAs17S1R+dG9QZe1rDAq
+                DhaUG6iIKxljA+BYdaVJo46X2jik4fMljUMvxpNGv9EH/w75XsYJ30uDgxeFpv8n5H6iW5
+                TcCnc8poUfk0i7kJtNHJDxvZBZY+imKeaysNNosyAoOhyLn9ijUNH6Cz1RFTds669w1mdu
+                HUxwNXP/xHnCP2IQXO7vX0Bkxn5Nk1JNewYVDjimFCkPN77q2Lwo3nxRP2fo/MJdP5NkLi
+                JText6abhJNZAibhryMue39+N9y7ypEBooT1p/rsMIQJdhsrPscY7k8lN855ho16eYyZbL
+                xgMHNriV1OByu+xH48YG3VkQSSWfLkBC1lsTdT3e+C7EQiirqgfnhskidR4cukPNWustAo
+                aNzFH83CN18KnYEfb/BsNtNoJ6IiZfA7GpEEBofkI+Qtjk1FoxhaO1ucJd6Cs8lr4vTDpk
+                CSPTL97xrosOmqjQuEHSmj6mBd1vMvbw6Wo1WI7/rBaiIyEH5PU+XBmu2SGiPw2IlOiWhQ
+                Emdo1nznZCkSqaHTTlbNvZwQbASN7UDKdd3eUjYpkGPyGN7IvaaD/oOf4s6C1M6Pce9dQN
+                GJYq71YtVaiNqkOkCG9g1F8TNUnIIE1rnfNG+v085liq4qNVO5IpmRZye8AmwZh9xVJ3Zx
+                KACgklcmGCmqIY/6PNgrgXOPPRpWAtv+LggcpPnb4Qpnz3WVWcIYpfsQDZafzvasIzUNRN
+                Dtq9TOw3GwHgnvA2AxtOZaHX4d1Zxy1cREnf5A9BU2kATG2iljtptbQbug6FiQEkTixMA/
+                Gji9/qGmnNrEDi+hWILrIz11KqmCyhy52k7st2WE2PN1LKgqbNPjQMSqpz8UBHVjh5Uufr
+                zCopndRHJ/f5JdzvZA9uL6RSxLNqdDxme3NSj2NdYC0IZa2LR2lsc81dA2WMY4+RgMgROo
+                d4+CRL5MEv26P6/weDfC33K+lmbRRGk7V0u6d0NALzM91W3pXTopaFNvG4PghhJk9m5DFt
+                EoA7lNdZ0YQpXQOpVAGvGzDPHXQrOiXK4Bk9o2XPmD1hYW6I1D/qWp3P6zJNt4rnxrNANh
+                isHpUJ7VuKqP0Wcdnb3KM3xnpR7Kn/WzFa5cuaepY8Rf4caEBpDZGdiiHRmRQFTJQNgDv3
+                FXFH3KXY4cmz2jBTGbTYt24SvDU=
+                -----END OPENSSH PRIVATE KEY-----
+                 
           username: root # User of the server you want to ssh into
      
           script: |
