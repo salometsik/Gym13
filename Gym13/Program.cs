@@ -14,6 +14,7 @@ using Gym13.Application.Services;
 using System.Reflection;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 var migrationsAssembly = "Gym13.Domain";
@@ -132,7 +133,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
-    ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
 });
 
 app.UseSwaggerDocumentation(builder.Configuration);
