@@ -10,14 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: install ssh keys
-      # check this thread to understand why its needed:
-      # https://stackoverflow.com/a/7044751
+    - name: Write SSH keys
       run: |
         install -m 600 -D /dev/null ~/.ssh/id_rsa
         echo "${{ secrets.PRIVATE_KEY }}" > ~/.ssh/id_rsa
-        ssh-keyscan -H 159.65.124.212  > ~/.ssh/known_hosts
-    - name: connect and pull
-      run: ssh root@159.65.124.212 "cd ~/code/Gym13"
-    - name: cleanup
-      run: rm -rf ~/.ssh
+        host='host.example.com'
+        hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
+        ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
