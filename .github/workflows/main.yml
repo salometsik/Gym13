@@ -30,7 +30,7 @@ jobs:
         run: 'sudo sh'
         
       - name: Stop the server
-        run: 'cd /root/code/Gym13'
+        run: 'cd ~/code/Gym13'
         
       - name: Stop the server1
         run: 'git fetch origin'
