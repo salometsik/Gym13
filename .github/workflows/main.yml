@@ -1,39 +1,23 @@
-name: CI
-on: [push]
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+  
 jobs:
-  # test:
-  #   ...
-  deploy:
-    name: "Deploy to staging"
+  run_pull:
+    name: run pull
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    # needs: test
+    
     steps:
-      - name: Configure SSH
-        run: |
-          mkdir -p ~/.ssh/
-          echo "$SSH_KEY" > ~/.ssh/staging.key
-          chmod 600 ~/.ssh/staging.key
-          cat >>~/.ssh/config <<END
-          Host staging
-            HostName $SSH_HOST
-            User $SSH_USER
-            IdentityFile ~/.ssh/staging.key
-            StrictHostKeyChecking no
-          END
-        env:
-          SSH_USER: root
-          SSH_KEY: ${{ secrets.PRIVATE_KEY }}
-          SSH_HOST: 159.65.124.212
-
-      - name: Stop the server0
-        run: ssh staging 'sudo sh'
-        
-      - name: Stop the server
-        run: ssh staging 'cd ~/code/Gym13'
-        
-      - name: Stop the server1
-        run: ssh staging 'git fetch origin'
-        
-      - name: Stop the server2
-        run: ssh staging 'git pull origin/master'
+    - name: install ssh keys
+      # check this thread to understand why its needed:
+      # https://stackoverflow.com/a/70447517
+      run: |
+        install -m 600 -D /dev/null ~/.ssh/id_rsa
+        echo "${{ secrets.PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        ssh-keyscan -H 159.65.124.212  > ~/.ssh/known_hosts
+    - name: connect and pull
+      run: ssh root@159.65.124.212 "cd ~/code/Gym13"
+    - name: cleanup
+      run: rm -rf ~/.ssh
