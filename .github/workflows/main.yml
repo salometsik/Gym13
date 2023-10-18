@@ -27,13 +27,13 @@ jobs:
           SSH_HOST: 159.65.124.212
 
       - name: Stop the server0
-        run: 'sudo sh'
+        run: ssh staging 'sudo sh'
         
       - name: Stop the server
-        run: 'cd ~/code/Gym13'
+        run: ssh staging 'cd ~/code/Gym13'
         
       - name: Stop the server1
-        run: 'git fetch origin'
+        run: ssh staging 'git fetch origin'
         
       - name: Stop the server2
-        run: 'git pull origin/master'
+        run: ssh staging 'git pull origin/master'
