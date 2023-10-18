@@ -18,4 +18,5 @@ jobs:
         hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
     - name: yle
-      run: 'cd ~/code/Gym13'
+      run: |
+        echo $PATH
