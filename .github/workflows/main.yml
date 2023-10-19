@@ -21,4 +21,5 @@ jobs:
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
     - name: dir
       run: |
+        cd Gym13
         dir
