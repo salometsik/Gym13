@@ -8,7 +8,9 @@ namespace Gym13.Extensions
     {
         public Gym13DbContext CreateDbContext(string[] args)
         {
-            var connectionString = "User ID=doadmin;Password=AVNS_9bS5Alo9CWuLc_OJ7Yf;Host=gym13-db-do-user-14832054-0.c.db.ondigitalocean.com;Port=25060;Database=defaultdb;";
+            var connectionString = "User ID=doadmin;Password=AVNS_RNYt07I8fddE8Pg2sMf;Host=gym13-db-test-do-user-14832054-0.c.db.ondigitalocean.com;Port=25060;Database=defaultdb;";
+            //Release
+            //var connectionString = "User ID=doadmin;Password=AVNS_9bS5Alo9CWuLc_OJ7Yf;Host=gym13-db-do-user-14832054-0.c.db.ondigitalocean.com;Port=25060;Database=defaultdb;";
 
             var optionsBuilder = new DbContextOptionsBuilder<Gym13DbContext>();
             optionsBuilder.UseNpgsql(connectionString);
