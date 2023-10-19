@@ -21,4 +21,4 @@ jobs:
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
     - name: yle
       run: |
-        working-directory: cd ~/code
+      working-directory: cd ~/code
