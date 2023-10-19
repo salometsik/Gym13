@@ -19,6 +19,6 @@ jobs:
         host='159.65.124.212'
         hosts="$(dig +short "$host" | grep -v '\.$' | sed -z 's|\n|,|g')$host"
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
-    - name: yle
+    - name: dir
       run: |
-        root@159.65.124.212
+        dir
