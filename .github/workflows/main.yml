@@ -21,4 +21,4 @@ jobs:
         ssh-keyscan -H "$hosts" > ~/.ssh/known_hosts
     - name: yle
       run: |
-        root@${{ secrets.PRIVATE_KEY }}
+        root@159.65.124.212
