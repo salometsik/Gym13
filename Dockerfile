@@ -35,6 +35,11 @@ WORKDIR /App
 
 # Copy everything
 COPY . ./
+COPY *.sln .
+COPY Gym13/*.csproj ./Gym13/
+COPY Gym13.Application/*.csproj ./Gym13.Application/
+COPY Gym13.Domain/*.csproj ./Gym13.Domain/
+COPY Gym13.Common/*.csproj ./Gym13.Common/ 
 # Restore as distinct layers
 RUN dotnet restore
 # Build and publish a release
