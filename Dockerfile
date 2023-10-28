@@ -9,7 +9,10 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 
  COPY ["Gym13.csproj", "Gym13/"]
- COPY ["Gym13.Application.csproj", "./Gym13.Application/"]
+# COPY ["Gym13.Application.csproj", "./Gym13.Application/"]
+ 
+
+COPY ["Gym13.Application/Gym13.Application.csproj", "Gym13.Application/"]
 COPY ["Gym13.Domain.csproj", "./Gym13.Domain/"]
 COPY ["Gym13.Common.csproj", "./Gym13.Common/"]
 
