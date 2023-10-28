@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["./Gym13/Gym13.csproj", "Gym13/"]
-COPY ["./Gym13.Application/Gym13.Application.csproj", "Gym13.Application/"]
-COPY ["./Gym13.Domain/Gym13.Domain.csproj", "Gym13.Domain/"]
-COPY ["./Gym13.Common/Gym13.Common.csproj", "Gym13.Common/"]
+COPY ["./Gym13.csproj", "Gym13/"]
+COPY ["./Gym13.Application.csproj", "Gym13.Application/"]
+COPY ["./Gym13.Domain.csproj", "Gym13.Domain/"]
+COPY ["./Gym13.Common.csproj", "Gym13.Common/"]
 RUN dotnet restore "Gym13/Gym13.csproj"
 COPY . .
 WORKDIR "/src/Gym13"
