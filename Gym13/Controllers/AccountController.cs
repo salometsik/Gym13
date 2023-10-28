@@ -55,36 +55,36 @@ namespace Gym13.Controllers
         public async Task<BaseResponseModel> ConfirmCode(ConfirmEmailOrPhoneRequestModel request)
             => await _accountService.ConfirmValidationCode(UserId, request.EmailOrPhone, request.Code);
 
-        [HttpPatch("send-code-from-profile")]
-        [UserAuthorize]
-        public async Task<BaseResponseModel> SendCodeFromProfile(string to) => await _accountService.SendCodeFromProfile(to, UserId);
+        //[HttpPatch("send-code-from-profile")]
+        //[UserAuthorize]
+        //public async Task<BaseResponseModel> SendCodeFromProfile(string to) => await _accountService.SendCodeFromProfile(to, UserId);
 
-        [HttpPatch("send-validation-code")]
-        public async Task<BaseResponseModel> SendValidationCode(string to) => await _accountService.SendValidationCode(to);
+        //[HttpPatch("send-validation-code")]
+        //public async Task<BaseResponseModel> SendValidationCode(string to) => await _accountService.SendValidationCode(to);
 
-        [HttpPatch("reset-password")]
-        public async Task<BaseResponseModel> ResetPassword(ResetPasswordRequestModel request)
-        {
-            var model = new UpdatePasswordModel
-            {
-                EmailOrPhone = request.EmailOrPhone,
-                Password = request.Password
-            };
-            return await _accountService.UpdatePassword(model);
-        }
+        //[HttpPatch("reset-password")]
+        //public async Task<BaseResponseModel> ResetPassword(ResetPasswordRequestModel request)
+        //{
+        //    var model = new UpdatePasswordModel
+        //    {
+        //        EmailOrPhone = request.EmailOrPhone,
+        //        Password = request.Password
+        //    };
+        //    return await _accountService.UpdatePassword(model);
+        //}
 
-        [HttpPatch("change-password")]
-        [UserAuthorize]
-        public async Task<BaseResponseModel> ChangePassword(ChangePasswordRequestModel request)
-        {
-            var model = new UpdatePasswordModel
-            {
-                UserId = UserId,
-                Password = request.Password,
-                CurrentPassword = request.CurrentPassword
-            };
-            return await _accountService.UpdatePassword(model);
-        }
+        //[HttpPatch("change-password")]
+        //[UserAuthorize]
+        //public async Task<BaseResponseModel> ChangePassword(ChangePasswordRequestModel request)
+        //{
+        //    var model = new UpdatePasswordModel
+        //    {
+        //        UserId = UserId,
+        //        Password = request.Password,
+        //        CurrentPassword = request.CurrentPassword
+        //    };
+        //    return await _accountService.UpdatePassword(model);
+        //}
 
     }
 }
