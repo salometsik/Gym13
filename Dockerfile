@@ -43,10 +43,7 @@ COPY Gym13.Common/*.csproj ./Gym13.Common/
 # Restore as distinct layers
 RUN dotnet restore
 
-COPY Gym13/. ./Gym13/
-COPY Gym13.Application/. ./Gym13.Application/
-COPY Gym13.Domain/. ./Gym13.Domain/ 
-COPY Gym13.Common/. ./Gym13.Common/ 
+COPY . .
 
 # Build and publish a release
 RUN dotnet publish -c Release -o out
